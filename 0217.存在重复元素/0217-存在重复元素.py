@@ -4,12 +4,10 @@ class Solution(object):
         :type nums: List[int]
         :rtype: bool
         """
-        record = dict()
-        for num in nums:
-            if record.get(num, 0):
+        if len(nums) <= 1:
+            return False
+        nums.sort()
+        for index in range(0,len(nums)-1):
+            if nums[index] == nums[index +1]:#or nums[index] == nums[index-1]:
                 return True
-            record[num] = 1
         return False
-
-                
-        
