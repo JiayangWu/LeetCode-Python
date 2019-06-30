@@ -17,9 +17,9 @@ class Solution(object):
         visited = set([0,0])
         heapify(queue)
         while queue:
-            val, x0, y0 = heappop(queue) #把目前队里最大的点找出来
+            score, x0, y0 = heappop(queue) #把目前队里最优的点找出来
             if [x0, y0] == [m - 1, n - 1]: #如果已经到终点了
-                return -val
+                return -score
             
             for k in range(4):
                 x = x0 + dx[k]
@@ -27,7 +27,7 @@ class Solution(object):
                 
                 if 0 <= x < m and 0 <= y < n and (x, y) not in visited:
                     visited.add((x, y))
-                    heappush(queue, [max(val, -A[x][y]), x, y]) #邻居入队
+                    heappush(queue, [max(score, -A[x][y]), x, y]) #邻居点入队
                     
         
             
