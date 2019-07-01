@@ -3,28 +3,10 @@
 # You should not implement it, or speculate about its implementation
 # """
 #class NestedInteger(object):
-#    def __init__(self, value=None):
-#        """
-#        If value is not specified, initializes an empty list.
-#        Otherwise initializes a single integer equal to value.
-#        """
-#
 #    def isInteger(self):
 #        """
 #        @return True if this NestedInteger holds a single integer, rather than a nested list.
 #        :rtype bool
-#        """
-#
-#    def add(self, elem):
-#        """
-#        Set this NestedInteger to hold a nested list and adds a nested integer elem to it.
-#        :rtype void
-#        """
-#
-#    def setInteger(self, value):
-#        """
-#        Set this NestedInteger to hold a single integer equal to value.
-#        :rtype void
 #        """
 #
 #    def getInteger(self):
@@ -39,16 +21,39 @@
 #        @return the nested list that this NestedInteger holds, if it holds a nested list
 #        Return None if this NestedInteger holds a single integer
 #        :rtype List[NestedInteger]
-#        """ 
+#        """
 
-class Solution(object):
-    def depthSum(self, nestedList):
+class NestedIterator(object):
+
+    def __init__(self, nestedList):
         """
+        Initialize your data structure here.
         :type nestedList: List[NestedInteger]
+        """
+        if nestedList:
+            self.stack = nestedList[::-1]
+        else:
+            self.stack = []
+    
+    def next(self):
+        """
         :rtype: int
         """
-        def Sum(weight, l):
-            if l.isInteger():
-                return weight * l.getInteger()
-            return sum(Sum(weight + 1, i) for i in l.getList())
-        return sum(Sum(1, i) for i in nestedList)
+        return self.stack.pop()
+    
+    def hasNext(self):
+        """
+        :rtype: bool
+        """
+        if self.stack:
+            top = self.stack.pop()
+            while not top.isInteger():
+                self.stack += top.getList()[::-1]
+                if self.stack:
+                    top = self.stack.pop()
+                else:
+                    return False
+            self.stack.append(top)
+            return True
+        else:
+            return False

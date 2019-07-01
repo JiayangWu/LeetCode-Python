@@ -39,16 +39,31 @@
 #        @return the nested list that this NestedInteger holds, if it holds a nested list
 #        Return None if this NestedInteger holds a single integer
 #        :rtype List[NestedInteger]
-#        """ 
+#        """
 
 class Solution(object):
-    def depthSum(self, nestedList):
+    def depthSumInverse(self, nestedList):
         """
         :type nestedList: List[NestedInteger]
         :rtype: int
         """
-        def Sum(weight, l):
+        record = [0 for _ in range(10000)]
+        res = 0
+        self.max_weight = 0
+        
+        def work(weight, l):
+            self.max_weight = max(weight, self.max_weight)
             if l.isInteger():
-                return weight * l.getInteger()
-            return sum(Sum(weight + 1, i) for i in l.getList())
-        return sum(Sum(1, i) for i in nestedList)
+                record[weight] += l.getInteger()
+                # print stack
+            else:
+                for item in l.getList():
+                    work(weight + 1, item)
+                    
+        for item in nestedList:
+            work(1, item)
+        
+        for i in range(1, self.max_weight + 1):
+            res += (self.max_weight + 1 - i) * record[i]
+            
+        return res
