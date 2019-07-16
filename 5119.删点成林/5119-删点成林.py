@@ -5,6 +5,7 @@
 #         self.left = None
 #         self.right = None
 
+
 class Solution(object):
     def delNodes(self, root, to_delete):
         """
@@ -30,7 +31,7 @@ class Solution(object):
         def dfs(node):
             if not node:
                 return
-
+ 
             if node.left and node.left.val in to_delete:  #左节点要删
                 dfs(node.left)
                 if node.left.left: #左节点的左节点还在，不需要删
@@ -48,11 +49,9 @@ class Solution(object):
                     self.roots += [node.right.right]
                 
                 node.right = None
-
+ 
             dfs(node.left)
             dfs(node.right)
             
         dfs(root)
         return self.roots
-            
-            
