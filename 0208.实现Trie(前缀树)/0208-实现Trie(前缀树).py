@@ -5,7 +5,6 @@ class Trie(object):
         Initialize your data structure here.
         """
         self.root = {}
-        
 
     def insert(self, word):
         """
@@ -16,10 +15,8 @@ class Trie(object):
         node = self.root
         for char in word:
             node = node.setdefault(char, {})
-        
-        node["end"] = True
             
-        
+        node["end"] = True
 
     def search(self, word):
         """
@@ -32,9 +29,7 @@ class Trie(object):
             if char not in node:
                 return False
             node = node[char]
-            
         return "end" in node
-        
 
     def startsWith(self, prefix):
         """
@@ -47,7 +42,6 @@ class Trie(object):
             if char not in node:
                 return False
             node = node[char]
-        
         return True
 
 

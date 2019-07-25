@@ -7,22 +7,20 @@ class Solution(object):
         """
         if not nums:
             return 0
-        res = len(nums) + 1
-        lo, hi = 0, -1
-        subsum = 0
-        while(lo < len(nums)):
-           
-            if subsum < s and hi + 1 < len(nums):
-                hi += 1
-                subsum += nums[hi]                
-            else:                
-                subsum -= nums[lo]
-                lo += 1
-                
-            if subsum >= s:
-                res = min(res, hi - lo + 1)
-                
-        return res if res != len(nums) + 1 else 0
-            
         
+        left, right = 0, 0
+        interval_sum = nums[0]
+        res = 1 << 31
+        while right < len(nums) and left <= right:
+            # print nums[left:right + 1], interval_sum, left, right
+            if interval_sum < s:
+                right += 1 #需要更多的数，向右拓展
+                if right < len(nums):
+                    interval_sum += nums[right]
+            else:
+                res = min(res, right - left + 1)                
+                interval_sum -= nums[left]
+                left += 1 #满足条件，试着缩小区间
+        # res = min(res, right - left + 1)
+        return res if res != 1 <<31 else 0
         
