@@ -15,8 +15,6 @@ class Solution(object):
             return root
         left = root.left
         right = root.right
-        root.right = self.invertTree(left)
         root.left = self.invertTree(right)
+        root.right = self.invertTree(left)
         return root
-
-    
