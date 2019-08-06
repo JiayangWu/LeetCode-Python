@@ -4,8 +4,4 @@ class Solution(object):
         :type n: int
         :rtype: bool
         """
-        i = 1
-        while(i<n):
-            i*=2
-        return i == n
-        
+        return n > 0 and not (n & (n - 1))

@@ -12,15 +12,11 @@ class Solution(object):
         :type k: int
         :rtype: int
         """
-        inorder = list()
-        self.inorderTra(root, inorder)
-        print inorder
         
-        return inorder[k-1]
-    
-    def inorderTra(self, node, path):
-        if not node:
-            return 
-        self.inorderTra(node.left, path)
-        path.append(node.val)
-        self.inorderTra(node.right, path)
+        def inorderTraversal(node):
+            if not node:
+                return []
+            return inorderTraversal(node.left) + [node.val] + inorderTraversal(node.right)
+        
+        l = inorderTraversal(root)
+        return l[k - 1]
