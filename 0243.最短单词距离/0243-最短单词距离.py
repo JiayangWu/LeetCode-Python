@@ -6,16 +6,13 @@ class Solution(object):
         :type word2: str
         :rtype: int
         """
-        # pos1, pos2 = -1, 
-        res = len(words)
-        pos1, pos2 = -res, -res
-        for idx, word in enumerate(words):
+        res = len(words) - 1
+        pos1, pos2 = -1, -1
+        for i, word in enumerate(words):
             if word == word1:
-                pos1 = idx
+                pos1 = i
             elif word == word2:
-                pos2 = idx
-            else:
-                continue
-            # print pos1, pos2, res, abs(pos1 - pos2)
-            res = min(res, abs(pos1 - pos2))
+                pos2 = i
+            if pos1 != -1 and pos2 != -1:
+                res = min(res, abs(pos1 - pos2))
         return res

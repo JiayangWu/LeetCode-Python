@@ -4,24 +4,25 @@ class WordDistance(object):
         """
         :type words: List[str]
         """
-        from collections import defaultdict
-        self.words = words
-        self.record = defaultdict(list)
+        self.record = collections.defaultdict(list)
         for i, word in enumerate(words):
             self.record[word].append(i)
-        # print self.record
+
     def shortest(self, word1, word2):
         """
         :type word1: str
         :type word2: str
         :rtype: int
         """
-        res = len(self.words)
-        for pos1 in self.record[word1]:
-            for pos2 in self.record[word2]:
-                res = min(res, abs(pos1 - pos2))
+        res = float("inf")
+        p1, p2 = 0, 0
+        while p1 < len(self.record[word1]) and p2 < len(self.record[word2]):
+            res = min(res, abs(self.record[word1][p1] - self.record[word2][p2]))
+            if self.record[word1][p1] < self.record[word2][p2]:
+                p1 += 1
+            else:
+                p2 += 1
         return res
-        
 
 
 # Your WordDistance object will be instantiated and called as such:

@@ -6,24 +6,31 @@ class Solution(object):
         :type word2: str
         :rtype: int
         """
-        res = len(words)
-        
-        if word1 != word2:
-            pos1, pos2 = -1, -1
+        if word1 == word2:       
+            pre = -1
+            res = float("inf")
             for i, word in enumerate(words):
                 if word == word1:
-                    pos1 = i   
-                elif word == word2:
-                    pos2 = i
-                if pos2 != -1 and pos1 != -1:
-                    res = min(res, abs(pos1 - pos2))
+                    if pre != -1:
+                        res = min(res, i - pre)
+                    pre = i
+            return res        
         else:
-            pos = -1
-            for i, word in enumerate(words):
-                if word == word1:
-                    if pos != -1:
-                        # print i, pos
-                        res = min(res, i - pos)
-                    pos = i
-                        
+            return self.previousSolution(words, word1, word2)
+        
+        
+        
+    def previousSolution(self, words, word1, word2):
+        self.record = collections.defaultdict(list)
+        for i, word in enumerate(words):
+            self.record[word].append(i)
+        res = float("inf")
+        p1, p2 = 0, 0
+        list1, list2 = self.record[word1], self.record[word2]
+        while p1 < len(list1) and p2 < len(list2):
+            res = min(res, abs(list1[p1]- list2[p2]))
+            if list1[p1] < list2[p2]:
+                p1 += 1
+            else:
+                p2 += 1
         return res
