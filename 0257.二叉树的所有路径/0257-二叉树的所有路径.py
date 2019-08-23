@@ -12,30 +12,18 @@ class Solution(object):
         :rtype: List[str]
         """
         if not root:
-            return list()
-        
-        res = list()
-        temp_res = str(root.val)
-        
+          return []
         if not root.left and not root.right:
-            return [temp_res]
-        
-        self.generate(root.left, str(root.val), res)
-        self.generate(root.right, str(root.val), res)
-        
-        return res
-    
-    def generate(self, node, temp_res, res):
-        if not node:
-            return
-        temp_res += "->" + str(node.val)
-        
-        if not node.left and not node.right:
-            res.append(temp_res)
-            return
-        else:           
-            self.generate(node.left, temp_res, res)
-            self.generate(node.right, temp_res, res)
-            
-        return 
-        
+          return [str(root.val)]
+        self.res = []
+        def dfs(node, tmp):
+          if not node:
+            return 
+          if not node.left and not node.right:
+            self.res.append(tmp + "->" + str(node.val))
+          dfs(node.left, tmp + "->" + str(node.val))
+          dfs(node.right, tmp + "->" + str(node.val))
+          
+        dfs(root.left, str(root.val))
+        dfs(root.right, str(root.val))
+        return self.res
