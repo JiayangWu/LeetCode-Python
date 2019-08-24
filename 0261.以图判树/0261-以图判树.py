@@ -1,37 +1,19 @@
-
 class UnionFindSet(object):
-    def __init__(self, m):
- 
-        # m, n = len(grid), len(grid[0])
-        self.roots = [i for i in range(m)]
-        self.rank = [0 for i in range(m)]
-        self.count = m
+    def __init__(self, n):
+        self.count = n
+        self.roots = [i for i in range(n)]
         
-        for i in range(m):
-            self.roots[i] = i
- 
-    def find(self, member):
-        tmp = []
-        while member != self.roots[member]:
-            tmp.append(member)
-            member = self.roots[member]
-        for root in tmp:
-            self.roots[root] = member
-        return member
-        
+    def find(self, node):
+        while self.roots[node] != node:
+            node = self.roots[node]
+        return node
+    
     def union(self, p, q):
-        parentP = self.find(p)
-        parentQ = self.find(q)
-        if parentP != parentQ:
-            if self.rank[parentP] > self.rank[parentQ]:
-                self.roots[parentQ] = parentP
-            elif self.rank[parentP] < self.rank[parentQ]:
-                self.roots[parentP] = parentQ
-            else:
-                self.roots[parentQ] = parentP
-                self.rank[parentP] -= 1
-            self.count -= 1
-
+        p_parent = self.find(p)
+        q_parent = self.find(q)
+        self.roots[p_parent] = q_parent
+        self.count -= 1
+        
 class Solution(object):
     def validTree(self, n, edges):
         """
@@ -39,10 +21,11 @@ class Solution(object):
         :type edges: List[List[int]]
         :rtype: bool
         """
+        #开并查集，如果一条边的两个顶点在放进图之前就有相同的根结点，则说明这条边放进去之后会形成一个环
         ufs = UnionFindSet(n)
-        for edge in edges:
-            if ufs.find(edge[0]) == ufs.find(edge[1]):
+        for start, end in edges:
+            if ufs.find(start) == ufs.find(end):
                 return False
-            ufs.union(edge[0], edge[1])
-            
+            ufs.union(start, end)
+        # print ufs.count
         return ufs.count == 1

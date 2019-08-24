@@ -4,11 +4,15 @@ class Solution(object):
         :type nums: List[int]
         :rtype: List[int]
         """
-        dic = collections.Counter(nums)
+        a, b = 0, 0
+        mask = 0
+        for num in nums:
+            mask ^= num
+        mask = mask & (-mask)
         
-        res = list()
-        for key, val in dic.items():
-            if val == 1:
-                res.append(key)
-                
-        return res
+        for num in nums:
+            if mask & num:
+                a ^= num
+            else:
+                b ^= num
+        return [a, b]
