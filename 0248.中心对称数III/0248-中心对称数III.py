@@ -8,21 +8,16 @@ class Solution(object):
         if int(low) > int(high):
             return 0
         self.findStrobogrammatic(len(high))
-        #在low里找
+        
         low_rec = self.record[len(low)]
-        #找第一个 >= low的数的下标
-        low_cnt = 0
-        for i, num in enumerate(low_rec):
-            if int(num) >= int(low):
-                low_cnt = len(low_rec) - i
-                break
-                
+        #找在low_rec里有多少个数 >= low，结果放在low_cnt里
+        #这里相当于在找左侧边界
+
+        low_cnt = len(low_rec) - bisect.bisect_left(low_rec, low)
+        
+        #找第一个 > high的数的下标，如果没找到，则说明这个数组里所有的数都比 high小        
         high_rec = self.record[len(high)]
-        high_cnt = len(high_rec)
-        for i, num in enumerate(high_rec):
-            if int(num) > int(high):
-                high_cnt = i
-                break
+        high_cnt = bisect.bisect_right(high_rec, high)
 
         if len(low) + 1 == len(high):
             return low_cnt + high_cnt
@@ -31,20 +26,9 @@ class Solution(object):
         else:
             tmp = 0
             for l in range(len(low) + 1, len(high)):
-                # print l, self.record
                 tmp += len(self.record[l])
             return tmp + low_cnt + high_cnt
-        #找第一个 > high的数的下标
-        # left, right = 0, len(low_rec) - 1
-        # while left < right:
-        #     mid = (left + right) // 2
-        #     if low_rec[mid] == low:
-        #         low_cnt = len(low_rec) - mid
-        #     elif low_rec[mid] > low:
-        #         right = mid - 1
-        #     elif low_rec[mid] < low:
-        #         left = mid + 1
-            
+
         
         
  
