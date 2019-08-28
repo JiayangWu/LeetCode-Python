@@ -4,7 +4,8 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
-        l = len(nums)
-        idealsum = l*(l+1) /2
-        realsum = sum(nums)
-        return idealsum - realsum
+        s = set(nums)
+        for num in range(len(nums)):
+            if num not in s:
+                return num
+        return len(nums)

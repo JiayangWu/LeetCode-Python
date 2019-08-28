@@ -4,14 +4,14 @@ class Solution(object):
         :type s: str
         :rtype: bool
         """
-        record = dict()
-        for i, char in enumerate(s):
-            record[char] = record.get(char, 0) + 1
+        flag = 0
+        dic = collections.Counter(s)
         
-        odd_cnt = 0
-        for key, val in record.items():
+        for key, val in dic.items():
             if val % 2:
-                odd_cnt += 1
-                if odd_cnt > 1:
+                if not flag:
+                    flag = 1
+                else:
                     return False
+        
         return True
