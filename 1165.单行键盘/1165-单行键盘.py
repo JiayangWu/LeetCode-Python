@@ -9,8 +9,8 @@ class Solution(object):
         for i, char in enumerate(keyboard):
             dic[char] = i
             
-        res, last_pos = 0, 0
+        res, cur_pos = 0, 0
         for char in word:
-            res += abs(dic[char] - last_pos)
-            last_pos = dic[char]           
+            res += abs(dic[char] - cur_pos)
+            cur_pos = dic[char]           
         return res
