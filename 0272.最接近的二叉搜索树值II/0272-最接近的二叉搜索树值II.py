@@ -4,26 +4,31 @@
 #         self.val = x
 #         self.left = None
 #         self.right = None
-
+from heapq import *
 class Solution(object):
-    def closestValue(self, root, target):
+    def closestKValues(self, root, target, k):
         """
         :type root: TreeNode
         :type target: float
-        :rtype: int
+        :type k: int
+        :rtype: List[int]
         """
-        
         def inOrder(node):
             if not node:
                 return []
             return inOrder(node.left) + [node.val] + inOrder(node.right)
         
-        l = inOrder(root) 
-        res = 0
-        min_sub = float("inf")
-        
+        l = inOrder(root)
+        subs = []
+        heapify(subs)
         for num in l:
-            if abs(num - target) < min_sub:
-                min_sub = abs(num - target)
-                res = num
+            sub = abs(target - num)
+            heappush(subs, (-sub, num))
+            if len(subs) > k:
+                heappop(subs)
+                
+        res = []
+        for sub, num in subs:
+            res.append(num)
         return res
+            

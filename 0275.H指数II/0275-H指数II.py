@@ -4,16 +4,18 @@ class Solution(object):
         :type citations: List[int]
         :rtype: int
         """
-        l = len(citations)
-        lo, hi = 0, l - 1
+        n = len(citations)
+        left, right = 0, len(citations) - 1
         res = 0
-        while(lo <= hi):
-            mid = lo + (hi - lo) // 2
-            cnt = l - mid #包括mid自身右边还有的元素个数
-            if citations[mid] >= cnt: 
+        while left <= right:
+            
+            mid = (left + right) // 2
+            
+            cnt = n - mid
+            # print left, right, mid, citations[mid], cnt, citations
+            if citations[mid] < cnt:
+                left = mid + 1
+            elif citations[mid] >= cnt:
                 res = cnt
-                hi = mid -1
-            else:
-                lo = mid + 1
+                right = mid - 1
         return res
-                
