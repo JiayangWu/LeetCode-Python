@@ -6,35 +6,36 @@ class ZigzagIterator(object):
         :type v1: List[int]
         :type v2: List[int]
         """
-        self.list = []
-        if v1 and v2:
-            i = 0
-            for i in range(min(len(v1), len(v2))):
-                self.list.append(v1[i])
-                self.list.append(v2[i])
-            if v1[i + 1:]:
-                self.list += v1[i + 1:]
-            else:
-                self.list += v2[i + 1:]
-            
-        elif v1:
-            self.list = v1
-        else:
-            self.list = v2
-        self.index = 0
+        self.i1, self.i2 = 0, 0
+        self.v1, self.v2 = v1, v2
+        self.indicator = 0 # 0 for v1, 1 for v2
+
     def next(self):
         """
         :rtype: int
         """
-        self.index += 1
-        return self.list[self.index - 1]
+        if not self.indicator:
+            self.indicator = 1
+            if self.i1 < len(self.v1):
+                self.i1 += 1
+                return self.v1[self.i1 - 1]
+            else:
+                self.i2 += 1
+                return self.v2[self.i2 - 1]
+        else:
+            self.indicator = 0
+            if self.i2 < len(self.v2):
+                self.i2 += 1
+                return self.v2[self.i2 - 1]
+            else:
+                self.i1 += 1
+                return self.v1[self.i1 - 1]                  
 
     def hasNext(self):
         """
         :rtype: bool
         """
-        return self.index != len(self.list)
-        
+        return self.i1 < len(self.v1) or self.i2 < len(self.v2)
 
 # Your ZigzagIterator object will be instantiated and called as such:
 # i, v = ZigzagIterator(v1, v2), []
