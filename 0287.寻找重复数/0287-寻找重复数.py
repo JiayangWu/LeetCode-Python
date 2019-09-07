@@ -4,17 +4,13 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
-
         slow, fast = 0, 0
-        while(1):
+        while 1:
             slow = nums[slow]
             fast = nums[nums[fast]]
-            # print slow, fast
-            if slow == fast: # loop exists
+            if slow == fast:
                 fast = 0
-                while(nums[slow] != nums[fast]):
+                while nums[slow] != nums[fast]:
                     slow = nums[slow]
                     fast = nums[fast]
-                    # print slow, fast
                 return nums[fast]
-            
