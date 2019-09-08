@@ -7,7 +7,6 @@ class Solution(object):
         """
         l1 = version1.split(".")
         l2 = version2.split(".")
-        
         i, j = 0, 0
         while i < len(l1) and j < len(l2): # 逐位比大小
             num1, num2 = int(l1[i]), int(l2[j])

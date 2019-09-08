@@ -4,14 +4,16 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
-        l = len(nums)
-        dpmax = [0 for _ in range(l)]
-        dpmin = [0 for _ in range(l)]
+        #dp[i] = max(nums[i], nums[i] * dp[i - 1])
         
-        dpmax[0] = nums[0]
-        dpmin[0] = nums[0]
-        for i in range(1, l):
-            dpmax[i] = max(nums[i], max(nums[i] * dpmax[i - 1], nums[i] * dpmin[i - 1]))
-            dpmin[i] = min(nums[i], min(nums[i] * dpmax[i - 1], nums[i] * dpmin[i - 1]))
-
-        return max(dpmax)
+        dp = [0 for i in nums]
+        dpmin = [0 for i in nums]
+        
+        dp[0], dpmin[0] = nums[0], nums[0]
+        for i, num in enumerate(nums):
+            if i > 0:
+                dp[i] = max(num, max(dp[i - 1] * num, dpmin[i - 1] * num))
+                dpmin[i] = min(num, min(dp[i - 1] * num, dpmin[i - 1] * num))
+        
+        # print dp
+        return max(dp)

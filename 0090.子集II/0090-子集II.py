@@ -4,13 +4,13 @@ class Solution(object):
         :type nums: List[int]
         :rtype: List[List[int]]
         """
-        nums.sort()
-        result = [[]]
+        res = [[]]
         for num in nums:
-            for i in result[:]:
-                item = i[:]
-                item.append(num)
-                if item not in result:
-                    result.append(item[:])
-        return result
-    
+            tmp = res[:]
+            for item in res:
+                newitem = sorted(item + [num])
+                if newitem not in tmp:
+                    tmp.append(newitem)
+            res = tmp[:]
+            
+        return res

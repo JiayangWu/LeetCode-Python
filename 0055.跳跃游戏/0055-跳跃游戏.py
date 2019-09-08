@@ -4,10 +4,9 @@ class Solution(object):
         :type nums: List[int]
         :rtype: bool
         """
-
-        max_jump = 0
-        for index, num in enumerate(nums):
-            if index > max_jump:
-                return False
-            max_jump = max(max_jump, index + num)
-        return True
+        start, end = 0, 0
+        
+        while start <= end and end < len(nums):
+            end = max(end, start + nums[start])
+            start += 1
+        return end >= len(nums) - 1

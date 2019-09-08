@@ -14,16 +14,18 @@ class Solution(object):
         """
         if not preorder:
             return None
+        root_val = preorder[0]
+        root_idx = inorder.index(root_val)
         
-        root = TreeNode(preorder[0])        
-        left_inorder = inorder[: inorder.index(root.val)]
-        right_inorder = inorder[inorder.index(root.val) + 1 :]
+        preorder_left = preorder[1:1 + root_idx]
+        preorder_right = preorder[root_idx + 1:]
         
-        l_left = len(left_inorder)
-        left_preorder = preorder[1:l_left + 1]
-        right_preorder = preorder[l_left + 1 :]
+        inorder_left = inorder[:root_idx]
+        inorder_right = inorder[root_idx + 1:]
         
-        root.left = self.buildTree(left_preorder, left_inorder)
-        root.right = self.buildTree(right_preorder, right_inorder)
+        # print preorder_left, preorder_right, inorder_left, inorder_right
+        root = TreeNode(root_val)
+        root.left = self.buildTree(preorder_left, inorder_left)
+        root.right = self.buildTree(preorder_right, inorder_right)
         
         return root

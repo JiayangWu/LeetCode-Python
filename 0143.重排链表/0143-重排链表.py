@@ -15,23 +15,30 @@ class Solution(object):
         
         slow, fast = head, head
         while fast and fast.next:
+            # print slow.val, fast.val
             slow = slow.next
-            fast = fast.next.next
+            fast = fast.next
+            if fast and fast.next:
+                fast = fast.next
         
-        l1, l2 = head, self.reverseList(slow.next)
+        # print slow.val, fast.val
+        
+        tail = slow.next
         slow.next = None
-        # self.printList(l1)
-        # self.printList(l2)
-        while l1 and l2:
-            cur = l2
-            l2 = l2.next
-
-            cur.next = l1.next
-            l1.next = cur
-            l1 = l1.next.next
-
+        first = head
+        last = self.reverseList(tail)
+        
+        while last:
+            tmp = first.next
+            first.next = last
+            tmp2 = last.next
+            last.next = tmp
+            first = first.next.next
+            
+            last = tmp2
         return head
-    
+        
+        
     def reverseList(self, head):
         if not head or not head.next:
             return head
@@ -39,11 +46,3 @@ class Solution(object):
         head.next.next = head
         head.next = None
         return p
-    
-    def printList(self, head):
-        l = []
-        p = head
-        while p:
-            l.append(p.val)
-            p = p.next
-        print l

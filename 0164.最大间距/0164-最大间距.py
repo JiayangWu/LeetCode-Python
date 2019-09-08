@@ -28,3 +28,4 @@ class Solution(object):
                         
     def findBucketIndex(self, num, min_val, max_val, n):
         return int((num - min_val) * n / (max_val - min_val))
+                

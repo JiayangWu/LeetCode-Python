@@ -4,21 +4,27 @@ class Solution(object):
         :type nums: List[int]
         :rtype: None Do not return anything, modify nums in-place instead.
         """
-        #i 代表从nums结尾往前递增序列的头， j代表递增序列里比nums[i - 1]大的最小的元素
-        
-        l = len(nums)
-        for i in range(l - 1, -1, -1):
-            if nums[i - 1] < nums[i]:# 找到了需要的i
-                break
-        
-        if i == 0: # 代表当前不存在下一个更大的序列，整体翻转即可
-            nums[:] = nums[::-1]
+        if not nums or len(nums) == 1:
             return nums
+        # print nums, sorted(nums)[::-1]
+        if nums == sorted(nums)[::-1]:
+            nums[:] = nums[::-1]
+            return
         
-        for j in range(l - 1, i - 1, -1):
-            if nums[j] > nums[i - 1]: #找到了需要的j
+        i = len(nums) - 1
+        while(i - 1 >= 0 and nums[i - 1] >= nums[i]):
+            i -= 1
+        i -= 1    
+        tmp = nums[i]
+        j = len(nums) - 1
+        while(j >= i and nums[j] <= tmp):
+            j -= 1
+            if nums[j] > tmp:
                 break
 
-        nums[i - 1], nums[j] = nums[j], nums[i - 1]
-        nums[i:] = nums[i:][::-1]
-        return nums
+        # print tmp, nums[j], nums[i]
+        nums[i], nums[j] = nums[j], nums[i]
+        # print nums
+        nums[i+ 1:] = nums[i + 1:][::-1]
+        return 
+        

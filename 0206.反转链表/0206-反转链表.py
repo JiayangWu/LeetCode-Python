@@ -10,21 +10,14 @@ class Solution(object):
         :type head: ListNode
         :rtype: ListNode
         """
-        if  head is None or head.next is None :
+        if not head or not head.next:
             return head
-        
-        dummyhead = ListNode(0)
-        dummyhead.next = pre = head
-        cur = pre.next
-        while(cur):
-            # print cur.val, cur.next.val, pre.val
-            pre.next = cur.next 
-            cur.next = dummyhead.next
-            dummyhead.next = cur
-            cur = pre.next
-            
-        return dummyhead.next
-        
-        
-        
+        pre, cur = None, head
+        while cur: 
+            tmp = cur.next #保存尾部
+            cur.next = pre #逆转局部
+            pre = cur #pre后移
+            cur = tmp #cur后移
+        return pre
+
         

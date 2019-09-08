@@ -5,23 +5,19 @@ class Solution(object):
         :type target: int
         :rtype: bool
         """
-        m = len(matrix)
-        if m == 0:
+        if not matrix or not matrix[0]:
             return False
-        n = len(matrix[0])
-        if n == 0:
-            return False
+        m, n = len(matrix), len(matrix[0])
         
-        x, y = m - 1, 0
-        while(1):
-            if x < 0 or x >= m or y <0 or y >= n:
-                break
-            val = matrix[x][y]
-            if val == target:
-                return True
-            elif val > target:
-                x -= 1
-            elif val <target:
-                y += 1
-                
-        return False
+        i, j = m - 1, 0
+        while 1:
+            if 0 <= i < m and 0 <= j < n:
+                cur = matrix[i][j]
+                if cur == target:
+                    return True
+                elif cur < target:
+                    j += 1
+                elif cur > target:
+                    i -= 1
+            else:
+                return False

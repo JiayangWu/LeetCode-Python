@@ -11,22 +11,10 @@ class Solution(object):
         :type root: TreeNode
         :rtype: bool
         """
-        inorder = list() 
-        self.inorderTra(root, inorder)
-        # print inorder
-        for i in range(len(inorder)-1):
-            if inorder[i] >= inorder[i+1]:
-                return False
-        return True
-    
-    def inorderTra(self, root, inorder):
-        if not root:
-            return None
-    
+        def inOrder(node):
+            if not node:
+                return []
+            return inOrder(node.left) + [node.val] + inOrder(node.right)
         
-        self.inorderTra(root.left, inorder)
-        inorder.append(root.val)
-        self.inorderTra(root.right, inorder)
-        
-        return 
-        
+        inorder = inOrder(root)
+        return len(inorder) == len(set(inorder)) and inorder == sorted(inorder)

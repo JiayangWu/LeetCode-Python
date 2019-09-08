@@ -13,17 +13,8 @@ class Solution(object):
         """
         if not nums:
             return None
-             
-        def dfs(start, end):
-            if end < start:
-                return 
-            
-            mid = (end + start) // 2
-            root = TreeNode(nums[mid])
-            
-            root.left = dfs(start, mid - 1)
-            root.right = dfs(mid + 1, end)
-            
-            return root
-
-        return dfs(0, len(nums) - 1)
+        l = len(nums)
+        root = TreeNode(nums[l // 2])
+        root.left = self.sortedArrayToBST(nums[:l//2])
+        root.right = self.sortedArrayToBST(nums[l//2 + 1:])
+        return root

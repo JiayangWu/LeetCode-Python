@@ -4,15 +4,12 @@ class Solution(object):
         :type heights: List[int]
         :rtype: int
         """
-        res = 0
-        stack = list()
         heights = [0] + heights + [0]
-        for i in range(len(heights)):
-            while stack and heights[stack[-1]] > heights[i]:
-                top = stack.pop()
-                res = max(res, (i - stack[-1] - 1) * heights[top])
-                # print (i - stack[-1] - 1) * heights[top], heights[top]
-
+        stack = []
+        res = 0
+        for i, num in enumerate(heights):
+            while stack and heights[stack[-1]] > num:
+                    top = stack.pop()
+                    res = max(res, (i - stack[-1] - 1) * heights[top])
             stack.append(i)
-            # print stack
         return res

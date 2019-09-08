@@ -1,22 +1,19 @@
 class Solution(object):
-
     def climbStairs(self, n):
         """
         :type n: int
         :rtype: int
         """
-        if n <= 1:
-            return 1
-        if n == 2:
-            return 2
-        a = 1
-        b = 2
-        count = 3
-        while count<=n:
-          c = a + b
-          a = b
-          b = c
-          count += 1
-        return c
-          
-    
+        if n <= 2:
+            return [1, 2][n - 1]
+        first = 1
+        second = 2
+        cnt = 2
+        while cnt < n:
+            cnt += 1
+            cur = first + second
+            if cnt == n:
+                return cur
+            first = second
+            second = cur
+        

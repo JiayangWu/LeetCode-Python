@@ -5,12 +5,13 @@ class Solution(object):
         :type target: int
         :rtype: int
         """
-        if not nums:
-            return 0
-        l = len(nums)
-        for index in range(l):
-            if nums[index] >= target:
-                return index
-        return index + 1
-            
-        
+        lo,hi = 0, len(nums) - 1
+        while (lo <= hi):
+            mid = lo + (hi - lo) / 2
+            if nums[mid] == target:
+                return mid
+            elif nums[mid] > target:
+                hi = mid - 1
+            else:
+                lo = mid + 1
+        return lo

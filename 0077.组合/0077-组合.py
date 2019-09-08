@@ -6,18 +6,13 @@ class Solution(object):
         :rtype: List[List[int]]
         """
         res = []
-        def generate(k, i, tmp):
-            
-            if k == 0:
+        def dfs(t, cnt, tmp):
+            if cnt == 0:
                 res.append(tmp[:])
-                return
+
+            for i in range(t + 1, n + 1):
+                dfs(i, cnt - 1, tmp + [i])
             
-            for j in range(i , n + 1):
-                tmp.append(j)
-                generate(k - 1, j + 1, tmp)
-                tmp.pop()
-            
-        
-        generate(k, 1, [])
+        dfs(0, k, [])
         return res
-        
+            

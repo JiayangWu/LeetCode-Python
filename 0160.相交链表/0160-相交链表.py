@@ -10,39 +10,28 @@ class Solution(object):
         :type head1, head1: ListNode
         :rtype: ListNode
         """
-        la = 0
-        lb = 0
-        pa = headA
-        pb = headB
-        while(pa!= None):
+        pa, pb = headA, headB
+        la, lb = 0, 0
+        while pa:
             la += 1
             pa = pa.next
-        while(pb!= None):
+        
+        while pb:
             lb += 1
             pb = pb.next
-        
-        # print la,lb
-        pb = headB
-        pa = headA
-        if lb > la:
-            k = lb-la 
-            while(k > 0):
-                k -= 1
-                pb = pb.next
-        else:
-            k = la - lb
-            while(k > 0):
-                k -= 1
-                pa = pa.next
-        # print pb.val
-        # print pa.val
-        
-        while(pb != None):
-            # print pa.val, pb.val
-            if pb == pa:
-                return pa
-            else:
-                pa = pa.next
-                pb = pb.next
             
+        if la < lb:
+            la, lb, headA, headB = lb, la, headB, headA
+            
+        n = la - lb
+        pa, pb = headA, headB
+        while n:
+            pa = pa.next
+            n -= 1
+            
+        while pa:
+            if pa == pb:
+                return pa
+            pa = pa.next
+            pb = pb.next
         return None

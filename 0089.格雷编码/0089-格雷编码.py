@@ -4,8 +4,7 @@ class Solution(object):
         :type n: int
         :rtype: List[int]
         """
-        # G(i) = i ^ (i /2)
-        dp = [0 for _  in range(2 ** n)]
-        for i in range(1, 2 ** n):
-            dp[i] = i ^ (i /2)
-        return dp
+        res = []
+        for i in range(2 ** n):
+            res.append(i ^ (i // 2))
+        return res 

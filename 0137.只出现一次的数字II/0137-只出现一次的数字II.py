@@ -4,6 +4,4 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
-        for num in nums:
-            if nums.count(num) == 1:
-                return num
+        return (3 * sum(set(nums)) - sum(nums)) // 2

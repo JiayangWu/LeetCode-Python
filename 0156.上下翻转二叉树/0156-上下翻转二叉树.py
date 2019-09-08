@@ -11,21 +11,15 @@ class Solution(object):
         :type root: TreeNode
         :rtype: TreeNode
         """
-        #每一个节点变成其左孩子的右节点        
         if not root or (not root.left and not root.right):
             return root
-
-        parent, sibling = None, None
-        while root:
-            tmp = root.left
-            root.left = sibling
-            
-            sibling = root.right
-            root.right = parent
-            
-            parent = root
-            root = tmp
-            
-        return parent
-            
-            
+        newroot = self.upsideDownBinaryTree(root.left)
+        right = root.right
+        root.left.left = right
+        root.left.right = root
+        
+        root.left = None
+        root.right = None
+        
+        return newroot
+        

@@ -11,23 +11,11 @@ class Solution(object):
         :type root: TreeNode
         :rtype: bool
         """
+        def helper(node1, node2):
+            if not node1:
+                return not node2
+            if not node2:
+                return not node1
+            return node1.val == node2.val and helper(node1.left, node2.right) and helper(node1.right, node2.left)
         
-        queue = [root]
-        
-        while(queue):
-            next_queue = list()
-            layer = list()
-            for node in queue:
-                if not node:
-                    layer.append(None)
-                    continue
-                next_queue.append(node.left)
-                next_queue.append(node.right)
-                
-                layer.append(node.val)
-                
-            if layer != layer[::-1]:
-                return False
-            queue = next_queue
-            
-        return True
+        return helper(root, root)

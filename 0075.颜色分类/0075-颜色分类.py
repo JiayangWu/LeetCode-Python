@@ -2,31 +2,19 @@ class Solution(object):
     def sortColors(self, nums):
         """
         :type nums: List[int]
-        :rtype: void Do not return anything, modify nums in-place instead.
+        :rtype: None Do not return anything, modify nums in-place instead.
         """
-        b = 0
-        r = 0
-        w = 0
-        for item in nums:
-            if item == 0:
-                r+= 1
-            if item == 1:
-                w += 1
-            if item == 2:
-                b += 1
-        for index,item in enumerate(nums):
-            if r!= 0:
-                nums[index] = 0
-                r -= 1
-                continue
-            if w!= 0:
-                nums[index] = 1
-                w -= 1
-                continue
-            if b!= 0:
-                nums[index] = 2
-                b -= 1
-                continue
-        # return nums
-            
-        
+        lo, hi = 0, len(nums) - 1
+        i = 0
+        while i <= hi:
+            x = nums[i]
+            if x == 0:
+                nums[lo], nums[i] = nums[i], nums[lo]
+                lo += 1
+                i += 1
+            elif x == 2:
+                nums[hi], nums[i] = nums[i], nums[hi]
+                hi -= 1
+            else:
+                i += 1
+                

@@ -6,15 +6,13 @@ class Solution(object):
         """
         if not strs:
             return ""
-        
         strs.sort()
-        res = ""
         
-        for x, y in zip(strs[0], strs[-1]):
+        res = ""
+        pair = zip(strs[0], strs[-1])
+        for x, y in pair:
             if x == y:
                 res += x
             else:
                 break
-        
         return res
-                

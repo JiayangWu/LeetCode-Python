@@ -9,4 +9,5 @@ class Solution(object):
             if i < 2 or num != nums[i - 2]:
                 nums[i] = num
                 i += 1
+                
         return i

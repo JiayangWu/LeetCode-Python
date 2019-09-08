@@ -5,32 +5,34 @@ class Solution(object):
         :rtype: int
         """
         s = s.strip(" ")
-        if not len(s): #排除空
+        # print s
+        if not s or (s[0] not in ["+", "-"] and not s[0].isdigit()):
             return 0
-        if s[0] not in ["+", "-"] and not s[0].isdigit(): #排除第一个非空字符不是数字
-            return 0
+        
         op = 1
-        res = ""
+        tmp = ""
         for i, char in enumerate(s):
-            if i == 0 :
+            if i == 0:
                 if char == "-":
                     op = -1
                     continue
                 elif char == "+":
-                    continue
-            if char == " " or not char.isdigit():
+                    pass
+                    continue       
+            if char.isdigit():
+                tmp += char
+            else:
                 break
-            res += char
-        # print res, op
-        if len(res) > 0:
-            res = op * int(res)
+        # print tmp
+        if tmp:
+            res = op * int(tmp)
         else:
-            return 0
-        INT_MIN = -2 **31
+            res = 0
         INT_MAX = 2 **31 - 1
+        INT_MIN = -2 **31
         if res > INT_MAX:
             return INT_MAX
         elif res < INT_MIN:
             return INT_MIN
-        return res
-        
+        else:
+            return res

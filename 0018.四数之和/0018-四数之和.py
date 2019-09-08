@@ -1,46 +1,37 @@
 class Solution(object):
-    def fourSum(self, n, target):
+    def fourSum(self, nums, target):
         """
         :type nums: List[int]
         :type target: int
         :rtype: List[List[int]]
         """
-        self.res = []
-        n.sort()
-        # print n
-        def threeSum(nums,t, d):
-            """
-            :type nums: List[int]
-            :rtype: List[List[int]]
-            """
-            #固定a,用双指针在排序数组里找两数之和为-a
-            l = len(nums)
-            res = []
-            for i, a in enumerate(nums):
-                if i == 0 or nums[i] > nums[i - 1]:
-                #开始双指针
-                    left, right = i + 1, len(nums) - 1
+        if len(nums) < 4:
+            return []
+        nums.sort()
+        res = []
+        def findThreeSum(num, l, t):
+            for i, n in enumerate(l):
+                if i == 0 or l[i] > l[i - 1]:
+                    left, right = i + 1, len(l) - 1
                     while(left < right):
-                        s = a +  nums[left] + nums[right]
-                        # print d, a, nums[left], nums[right]
+                        s = n + l[left] + l[right]
+
                         if s == t:
-                            tmp = [d,a, nums[left], nums[right]]
-                            self.res.append(tmp)
+                            res.append([num, n, l[left], l[right]])
                             left += 1
                             right -= 1
-                            while left < right and nums[left] == nums[left - 1]:
+                            while(left < right and l[left] == l[left - 1]):
                                 left += 1
-                            while right > left and nums[right] == nums[right + 1]:
+                            while(right > left and l[right] == l[right + 1]):
                                 right -= 1
-                        elif s < t:
-                            left += 1
                         elif s > t:
                             right -= 1
+                        else:
+                            left += 1
+                      
+        for i, num in enumerate(nums):
+            if i == 0 or nums[i] > nums[i - 1]:
+                findThreeSum(num, nums[i + 1:], target - num)
+                
+        return res
         
-        for i in range(len(n) - 3):
-            if i == 0 or n[i] > n[i - 1]:
-                # print n[i]
-                threeSum(n[i + 1:], target - n[i], n[i])
-                
-                
-        return self.res

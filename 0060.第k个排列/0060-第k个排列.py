@@ -1,4 +1,3 @@
-import math
 class Solution(object):
     def getPermutation(self, n, k):
         """
@@ -6,13 +5,24 @@ class Solution(object):
         :type k: int
         :rtype: str
         """
-        digit = [i for i in range(1, n + 1)] #生成1 ~ n的列表
-        res = ""
-        while n > 0:
-            tmp = math.factorial(n - 1) #计算一共有多少种组合
-            idx =  (k - 1) / tmp #由K在tmp中占的比例来确定第一位的数字
-            k -= idx * tmp #第一位确定之后，刷新k
-            res += str(digit[idx])
-            digit.pop(idx)
-            n -= 1
-        return res
+        fac = [1]      
+        for i in range(2, n + 1):
+            fac.append(fac[-1] * i)
+        digits = [i for i in range(1, n + 1)]
+        
+        self.res = ""
+        def dfs(left_digit, tmp, kk):
+            if left_digit == 0:
+                self.res = tmp[:]
+                return
+            for digit in digits:
+                kk -= fac[left_digit - 2]
+                if kk <= 0:
+                    kk += fac[left_digit - 2]
+                    fac.pop()
+                    digits.remove(digit)
+                    dfs(left_digit - 1, tmp + str(digit), kk)
+                    break
+
+        dfs(n, "", k)
+        return self.res

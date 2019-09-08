@@ -4,13 +4,14 @@ class Solution(object):
         :type s: str
         :rtype: bool
         """
-        if len(s)%2:
-            return False
-        dic = {")":"(","]":"[","}":"{"}
-        stack = [None]
-        for item in s:
-            if item in dic and stack[-1] == dic[item]:
-                stack.pop()
+        mapping = {")":"(", "]":"[", "}":"{"}
+        stack = []
+        for i, char in enumerate(s):
+            if char not in mapping:#left
+                stack.append(char)
             else:
-                stack.append(item)
-        return len(stack) == 1
+                if not stack or stack[-1] != mapping[char]:
+                    return False
+                stack.pop()
+                
+        return len(stack) == 0

@@ -5,21 +5,20 @@ class Solution(object):
         :type n: int
         :rtype: List[List[int]]
         """
-        if not k or not n:
-            return []
-        
-        res = []         
-        def dfs(k, n, tmp, start):
-            if n == 0 and k == 0:
-                res.append(tmp[:])
+        res = []
+        def dfs(start, cnt, target, tmp):
+            if target < 0:
                 return
-            if k <= 0 or n <= 0:
-                return
-            
-            for i in range(start, 10):
-                tmp.append(i)
-                dfs(k - 1, n - i, tmp, i + 1)
-                tmp.pop()
-                    
-        dfs(k, n, [], 1)       
+            if target == 0:
+                if cnt == 0:
+                    res.append(tmp)
+                else:
+                    return
+                
+            for num in range(start, 10):
+                visited.add(num)
+                dfs(num + 1, cnt - 1, target - num, tmp + [num])
+                visited.remove(num)
+        visited = set()        
+        dfs(1, k, n, [])
         return res

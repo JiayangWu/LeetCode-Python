@@ -1,10 +1,3 @@
-"""
-# Definition for a Node.
-class Node(object):
-    def __init__(self, val, neighbors):
-        self.val = val
-        self.neighbors = neighbors
-"""
 class Solution(object):
     def cloneGraph(self, node):
         """
@@ -12,8 +5,9 @@ class Solution(object):
         :rtype: Node
         """
         from collections import defaultdict, deque
-        record = defaultdict(list)
-        mapping = dict()
+        neighborList = defaultdict(list) #这个哈希表用于记录老结点和其邻居的关系, key是每个老结点，val是它的neighbors
+        mapping = dict() #这个哈希表用于记录老结点和它对应的新节点
+        
         def bfs(queue):
             if not queue:
                 return
@@ -21,44 +15,35 @@ class Solution(object):
             
             while queue:
                 cur = queue.popleft()
-                mapping[cur] = Node(cur.val, [])
+                mapping[cur] = Node(cur.val, []) #为每个老结点创建一个对应的新节点
                 for nei in cur.neighbors:
-                    record[cur].append(nei)
+                    neighborList[cur].append(nei) #记录下当前老结点的所有邻居
                     if nei not in visited:
                         visited.add(nei)
                         newqueue.append(nei)
-            bfs(newqueue)
+            bfs(newqueue) #BFS找下一层
          
         visited = {node}           
         q = deque()
         q.append(node)
         bfs(q)
-        
-        # for key, val in record.items():
-        #     print key.val
-        #     for item in val:
-        #         print item.val
-        # print mapping
         visited = {node}
         
         def generate(queue):
             while queue:
                 newqueue = []
                 for node in queue:
-                    if node:
-                        # print node.val                    
-                        if not record[node]: #如果没有邻居
+                    if node:                
+                        if not neighborList[node]: #如果没有邻居
                             return
 
-                        for nei in record[node]: #处理每个邻居
-                            mapping[node].neighbors.append(mapping[nei])
+                        for nei in neighborList[node]: #处理每个邻居
+                            mapping[node].neighbors.append(mapping[nei]) #在新的结点标记【老结点的邻居对应的】新结点
                             if nei not in visited:
                                 visited.add(nei)
                                 newqueue.append(nei)
                 queue = newqueue[:]
-        q = deque()
-        q.append(node)
-        generate(q)
 
-        return mapping[node]
-                
+        generate([node])
+
+        return mapping[node] #返回输入结点对应的新节点

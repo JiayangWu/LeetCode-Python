@@ -4,16 +4,12 @@ class Solution(object):
         :type path: str
         :rtype: str
         """
-        if not path:
-            return ""
-        pathList = path.split("/")
+        l = path.split("/")
         stack = []
-        for path in pathList:
-            if path == "." or path == "":
-                continue
-            if path == "..":
-                if stack:
-                    stack.pop()
-            else:
-                stack.append(path)
+        for item in l:
+            if item != "." and item != ".." and item:
+                stack.append(item)
+            elif item == ".." and stack:
+                stack.pop()
+
         return "/" + "/".join(stack)

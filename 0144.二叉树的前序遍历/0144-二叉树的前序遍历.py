@@ -13,6 +13,15 @@ class Solution(object):
         """
         if not root:
             return []
-        result = [root.val] + self.preorderTraversal(root.left)
-        result += self.preorderTraversal(root.right)
-        return result 
+        stack = [root]
+        res = []
+        while stack:
+            cur = stack.pop()
+            res.append(cur.val)
+            
+            if cur.right:
+                stack.append(cur.right)
+            if cur.left:
+                stack.append(cur.left)
+        return res
+        

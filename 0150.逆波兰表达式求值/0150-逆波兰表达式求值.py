@@ -5,22 +5,23 @@ class Solution(object):
         :rtype: int
         """
         stack = []
-        for item in tokens:
-            if item in ["+", "-", "*", "/"]:
-                if item == "+":
-                    temp = int(stack[-2]) + int(stack[-1])
-                elif item == "-":
-                    temp = int(stack[-2]) - int(stack[-1])
-                    # print temp                
-                elif item == "*":
-                    temp = int(stack[-2]) * int(stack[-1])             
-                elif item == "/":
-                    temp = int(float(stack[-2])/ float(stack[-1]))                    
-                stack.pop()
-                stack.pop()
-                stack.append(temp)
-                
+        for i, x in enumerate(tokens):
+            # print stack
+            if x not in ["+", "-", "*", "/"]:
+                stack.append(int(x))
             else:
-                stack.append(item)
+                if x == "+":
+                    tmp = stack[-1] + stack[-2]
+                    stack = stack[:-2]       
+                elif x == "-":
+                    tmp = stack[-2] - stack[-1]
+                    stack = stack[:-2]                    
+                elif x == "*":
+                    tmp = stack[-1] * stack[-2]
+                    stack = stack[:-2]
+                elif x == "/":
+                    tmp = int( stack[-2] * 1.0 / stack[-1])
+                    stack = stack[:-2]
+                stack.append(tmp)
                 
-        return int(stack[0])
+        return stack[0]

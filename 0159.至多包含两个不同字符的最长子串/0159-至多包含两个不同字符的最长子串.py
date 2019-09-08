@@ -4,29 +4,29 @@ class Solution(object):
         :type s: str
         :rtype: int
         """
-        left, right = 0, 0
-        queue = []
-        last_pos = {}
+        if len(s) <= 2:
+            return len(s)
+        start, end = 0, 0
+        q = []
         res = 0
-        for right in range(len(s)):
-            if s[right] in queue:
-                last_pos[s[right]] = right
-            elif s[right] not in queue:
-                if len(queue) >= 2:
-
-                    if last_pos[queue[0]] < last_pos[queue[1]]: #把0号元素踢掉
-                        left = last_pos[queue[0]] + 1
-                        last_pos.pop(queue[0])
-                        queue.pop(0)
+        dic = {} #记录q中字母最近一次出现的下标
+        for i, char in enumerate(s):
+            dic[char] = i
+            if len(q) < 2:
+                if char not in q:
+                    q.append(char)
+            else:
+                if char not in q: #要以旧换新了
+                    if dic[q[0]] < dic[q[1]]:
+                        tmp = q[0]
+                        q.pop(0)
                     else:
-                        left = last_pos[queue[1]] + 1
-                        last_pos.pop(queue[1])
-                        queue.pop(1)
-                        
-                queue.append(s[right])
-                last_pos[s[right]] = right
-            # print s[left:right + 1]
-            res = max(res, right - left + 1)
+                        tmp = q[1]
+                        q.pop(1)
+                    start = dic[tmp] + 1
+                    
+                    q.append(char)
+            end = i   
+            res = max(end - start + 1, res)
         return res
-                        
-        return res 
+                    

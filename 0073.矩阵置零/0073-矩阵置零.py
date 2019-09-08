@@ -2,23 +2,23 @@ class Solution(object):
     def setZeroes(self, matrix):
         """
         :type matrix: List[List[int]]
-        :rtype: void Do not return anything, modify matrix in-place instead.
+        :rtype: None Do not return anything, modify matrix in-place instead.
         """
-        self.matrix = matrix
-        m = len(matrix)
-        n = len(matrix[0])
-        l_m = [1] * m
-        l_n = [1] * n
+        if not matrix or not matrix[0]:
+            return matrix
+        m, n = len(matrix), len(matrix[0])
+        
         for i in range(m):
             for j in range(n):
-                # print matrix[i][j], i, j
                 if matrix[i][j] == 0:
-                    l_m[i] = 0
-                    l_n[j] = 0
-        # print l_m, l_n
+                    for t in range(m):#同一列
+                        if matrix[t][j] != 0:
+                            matrix[t][j] = "0"
+                    for t in range(n):#同一行
+                        if matrix[i][t] != 0:
+                            matrix[i][t] = "0"            
         for i in range(m):
             for j in range(n):
-                # print i,j
-                if l_m[i] == 0 or l_n[j] == 0:
-                        matrix[i][j] = 0
-                # print matrix
+                if matrix[i][j] == "0":
+                    matrix[i][j] = 0
+        

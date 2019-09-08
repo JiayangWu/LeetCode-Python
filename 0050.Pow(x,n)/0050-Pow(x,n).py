@@ -1,17 +1,22 @@
 class Solution(object):
-    def myPow(self, x, n):
+    def myPow(self, x0, n):
         """
         :type x: float
         :type n: int
         :rtype: float
         """
-        i = abs(n)
-        res = 1.0
-        while(i != 0):
-            if i % 2:
-                res *= x
-            x *= x
-            # print i, res
-            i /= 2
-        return res if n > 0 else 1/res
-        
+        if not n:
+            return 1
+        def helper(x, n, tmp):
+            print n, x
+            if n <= 1:
+                return x * tmp
+            if n % 2:
+                tmp *= x
+                n -= 1
+            return helper(x * x, n // 2, tmp)
+        op = 1
+        if n < 0:
+            op = -1 
+        res = helper(x0, abs(n), 1)
+        return res if op > 0 else 1.0/res

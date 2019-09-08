@@ -10,17 +10,19 @@ class Solution(object):
         :type head: ListNode
         :rtype: ListNode
         """
-        new_head = ListNode(1)
-        new_head.next = head
-        pre = new_head
-        cur = head
-        while cur:
-            while cur.next != None and cur.val == cur.next.val:
-                cur = cur.next;
-            if cur == pre.next:
-                pre = pre.next
-            else:
-                pre.next = cur.next
-            cur = cur.next
-                
-        return new_head.next
+        if not head or not head.next:
+            return head            
+        newhead = ListNode(-1)
+        newhead.next = head
+        if head.val != head.next.val:
+            head.next = self.deleteDuplicates(head.next)
+        else:
+            p = head
+            while p and p.val == head.val:
+                p = p.next
+            newhead.next = self.deleteDuplicates(p)
+            
+        return newhead.next
+        
+            
+        

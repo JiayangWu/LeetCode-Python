@@ -4,15 +4,15 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
-        # 对于处于1~n之间的数，把它们放到nums[i - 1]的位置上
-        
-        for i in range(len(nums)):
-            while 1 <= nums[i] <= len(nums) and nums[i] != nums[nums[i] - 1]:
-                # nums[i], nums[nums[i] - 1] = nums[nums[i] - 1], nums[i]
-                nums[nums[i] - 1], nums[i] = nums[i], nums[nums[i] - 1]
-                
-        for i, x in enumerate(nums):
-            if x != i + 1:
-                return i + 1
-        
-        return len(nums) + 1
+        if not nums:
+            return 1
+        max_element = max(nums)
+        if max_element < 0:
+            return 1
+        i = 1
+        while i < max_element:
+        # for i in range(1, max_element):
+            if i not in nums:
+                return i
+            i += 1
+        return max_element + 1

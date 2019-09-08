@@ -4,10 +4,7 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
-        r = 0
-        for i in nums:
-            r ^= i
-        return r
-           
-        
-       
+        res = nums[0]
+        for i in range(1, len(nums)):
+            res ^= nums[i]
+        return res

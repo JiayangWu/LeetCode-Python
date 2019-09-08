@@ -9,8 +9,7 @@ class Solution(object):
             return 0
         lo, hi = 0, len(nums) - 1
         while(lo < hi):
-            # print lo,hi
-            mid = lo + (hi - lo) / 2
+            mid = (lo + hi) // 2
             if nums[mid - 1] < nums[mid] and nums[mid] > nums[mid + 1]:
                 return mid
             elif nums[mid] < nums[mid + 1]:
@@ -19,3 +18,4 @@ class Solution(object):
                 hi = mid - 1
                 
         return lo
+             

@@ -1,12 +1,16 @@
 class Solution(object):
-    def isOneEditDistance(self, s, t):      
+    def isOneEditDistance(self, s, t):
+        """
+        :type s: str
+        :type t: str
+        :rtype: bool
+        """
+        edit = 0 #代表编辑次数
         distance = len(s) - len(t)
         if abs(distance) > 1: #长度都差了不止一位，肯定不对
             return False
-        if not s or not t: #两者有一个为空返回真，两个都为空返回假
+        if not s or not t:
             return s != t
-        
-        edit = 0 #代表编辑次数
         i, j = 0, 0
         while i < len(s) and j < len(t):
             if s[i] == t[j]: #无需编辑
@@ -23,10 +27,10 @@ class Solution(object):
                     i += 1
                     j += 1
                 edit += 1
-
-        if i < len(s): #如果t没了，s还多了一位，取决于edit还是不是0
+        # print i, j, edit
+        if i < len(s):
             return edit == 0
-        if j < len(t): #如果s没了，t还多了一位，取决于edit还是不是0
+        if j < len(t):
             return edit == 0
-        
-        return i == len(s) and j == len(t) and edit == 1 
+        return i == len(s) and j == len(t) and edit == 1
+    

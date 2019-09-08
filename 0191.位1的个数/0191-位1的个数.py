@@ -4,9 +4,4 @@ class Solution(object):
         :type n: int
         :rtype: int
         """
-        sum = 0
-        while(n > 0):
-            if (n & 1):
-              sum += 1
-            n >>= 1
-        return sum
+        return bin(n).count("1")

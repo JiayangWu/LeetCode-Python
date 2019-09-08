@@ -5,39 +5,38 @@ class Solution(object):
         :type target: int
         :rtype: int
         """
+        #1. 二分找旋转点
+        #2. 确认target落在哪一侧然后二分找
         if not nums:
             return -1
         if len(nums) == 1:
             return 0 if nums[0] == target else -1
-        
-        lo, hi = 0, len(nums) - 1
-        while(lo <= hi):
-            mid = (lo + hi) // 2
-            # print mid, nums[mid]
-            if mid + 1 < len(nums) and nums[mid] > nums[mid +1]:
+        midposition = -1
+        left, right = 0, len(nums) - 1
+        while left <= right:
+            mid = (left + right) // 2
+            # print mid
+            if mid + 1 < len(nums) and nums[mid] > nums[mid + 1]:
+                midposition = mid
                 break
-            if nums[mid] < nums[-1]:
-                hi = mid - 1
             elif nums[mid] >= nums[0]:
-                lo = mid + 1
-                
-        if lo > hi:#没有旋转
-            lo, hi = 0, len(nums) - 1
-        else:
+                left = mid + 1
+            elif nums[mid] <= nums[-1]:
+                right = mid - 1
+        # print midposition       
+        if midposition != -1:
             if target >= nums[0]:
-                lo, hi = 0, mid
+                left, right = 0, midposition
             else:
-                lo, hi = mid + 1, len(nums) - 1
-
-        while(lo <= hi):
-            # print lo, hi
-            mid = (lo + hi) // 2
+                left, right = midposition + 1, len(nums) - 1
+        else:
+            left, right = 0, len(nums) - 1
+        while(left <= right):
+            mid = (left + right) // 2
             if nums[mid] == target:
                 return mid
             elif nums[mid] > target:
-                hi = mid - 1
+                right = mid - 1
             else:
-                lo = mid + 1
-        
+                left = mid + 1
         return -1
-                

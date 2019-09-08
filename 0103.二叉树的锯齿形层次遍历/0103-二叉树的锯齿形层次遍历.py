@@ -11,28 +11,21 @@ class Solution(object):
         :type root: TreeNode
         :rtype: List[List[int]]
         """
+        reverse = 0
         queue = [root]
-        lor = 0 # 0 for left and 1 for right
-        res = list()
-        if not root:
-            return []
-        while(queue):
-            next_queue = list()
-            layer = list()
-            
+        res = []
+        while queue:
+            next_queue = []
+            layer = []
             for node in queue:
-                if node.left:
-                    next_queue.append(node.left)
-                if node.right:
-                    next_queue.append(node.right)
-                
-                layer.append(node.val)
-
-            if not lor: # left
-                res.append(layer)
-            else:
-                res.append(layer[::-1])
-            
-            lor = 1 - lor
-            queue = next_queue
+                if node:
+                    layer.append(node.val)
+                    next_queue += [node.left, node.right]
+            queue = next_queue[:]
+            if layer:
+                if not reverse:
+                    res.append(layer[:])
+                else:
+                    res.append(layer[::-1])
+                reverse = 1 - reverse
         return res

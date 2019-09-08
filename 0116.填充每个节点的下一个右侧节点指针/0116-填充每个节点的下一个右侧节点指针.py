@@ -13,20 +13,28 @@ class Solution(object):
         :type root: Node
         :rtype: Node
         """
-        #先排除掉不需要处理的情况
-        if not root or (not root.left and not root.right):
-            return root
-        
-        #某一个节点的左孩子的next一定是指向这个节点的右孩子
-        root.left.next = root.right
-        
-        #当某一个节点的next不为空的时候，这个节点的右孩子的next一定是指向该节点next的left
-        if root.next:
-            root.right.next = root.next.left
-        
-        #递归处理下一层
+        if not root:
+            return
+        wait = None
+        if root.left and root.right:
+            root.left.next = root.right
+            wait = root.right
+        elif root.left:
+            wait = root.left
+        elif root.right:
+            wait = root.right
+            
+        p = root.next
+        while p:
+            if p.left:
+                wait.next = p.left
+                break
+            elif p.right:
+                wait.next = p.right
+                break
+            else:
+                p = p.next
+
         self.connect(root.left)
         self.connect(root.right)
-  
-        return root
-                
+        return root   

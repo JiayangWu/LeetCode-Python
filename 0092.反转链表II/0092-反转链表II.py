@@ -12,52 +12,40 @@ class Solution(object):
         :type n: int
         :rtype: ListNode
         """
-        # 先找到m ~ n这一段，翻转，再塞回去
-        if m == n:
-            return head
+        newhead = ListNode(-1)
+        newhead.next = head
+        #找到第m - 1和第n个节点
         cnt = 1
-        pre_m, pn = None, None
-        node = head
-        while(cnt < n):
-            # print node.val, cnt
-            if cnt == m - 1:
-                pre_m = node
-            node, cnt = node.next, cnt + 1
-        pn = node
-        if pn:
-            nextn = pn.next
-            pn.next = None
+        slow = head
+        while cnt < m - 1:
+            print slow.val
+            slow = slow.next
+            cnt += 1
+        cnt = 1
+        fast = head
+        while cnt < n:
+            # print fast.val, n
+            fast = fast.next        
+            cnt += 1
+            # print fast.val, cnt
+        print slow.val, fast.val  
+        tail = fast.next
+        fast.next = None
+        if m != 1:          
+            slow.next = self.reverseLL(slow.next)
         else:
-            nextn = None
-        # print pre_m.val, nextn.val
-         
-        if pre_m is None: #从1开始
-            head = self.reverseList(head)
-            newhead = head
-            while(head.next):
-                head = head.next
-            head.next = nextn
-            return newhead
-        else:
-            pre_m.next = self.reverseList(pre_m.next)
-            newhead = head
-            while(head.next):
-                head = head.next
-            head.next = nextn
-            return newhead
+            newhead.next = self.reverseLL(slow)
+        p = slow
+        while p and p.next:
+            p = p.next
+        p.next = tail
+        return newhead.next
         
-            
-            
-
-        
-    def reverseList(self, head):
-        """
-        :type head: ListNode
-        :rtype: ListNode
-        """
-        if head is None or head.next is None:
+    def reverseLL(self, head):
+        if not head or not head.next:
             return head
-        tmp = self.reverseList(head.next)
+        
+        p = self.reverseLL(head.next)
         head.next.next = head
         head.next = None
-        return tmp
+        return p

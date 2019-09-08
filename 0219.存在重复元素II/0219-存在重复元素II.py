@@ -5,12 +5,10 @@ class Solution(object):
         :type k: int
         :rtype: bool
         """
-        record = dict()
+        dic = dict()
         for i, num in enumerate(nums):
-            # print record
-            if record.get(num, -1) != -1:
-                if i - record[num] <= k:
+            if num in dic:
+                if i - dic[num] <= k:
                     return True
-            record[num] = i
+            dic[num] = i
         return False
-                

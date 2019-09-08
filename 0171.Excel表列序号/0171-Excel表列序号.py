@@ -4,9 +4,8 @@ class Solution(object):
         :type s: str
         :rtype: int
         """
-        l = len(s) - 1
         res = 0
-        for index, item in enumerate(s):
-            res += (ord(item) - ord("A") + 1) * (26 ** (l - index))
+        for i, char in enumerate(s):
+            res *= 26
+            res += 1 + ord(char) - ord("A")           
         return res
-            

@@ -12,19 +12,19 @@ class Solution(object):
         :type sum: int
         :rtype: List[List[int]]
         """
-        res = list()
-        
-        def dfs(node, tmp):
+        res = []
+        def dfs(node, path):
             if not node:
-                return 
+                return
             
-            tmp.append(node.val) 
-            if not node.left and not node.right and sum(tmp) == s:
-                res.append(tmp[:])
+            path += [node.val]
+            if not node.left and not node.right and sum(path) == s:
+                res.append(path[:])
+                
+            dfs(node.left, path)
+            dfs(node.right, path)
             
-            dfs(node.left, tmp)
-            dfs(node.right, tmp)
-            tmp.pop()
+            path.pop()
             
-        dfs(root, list())        
+        dfs(root, [])
         return res

@@ -11,25 +11,18 @@ class Solution(object):
         :type root: TreeNode
         :rtype: List[List[int]]
         """
-        if not root:
-            return []
         queue = [root]
-        res = list()
+        res = []
         while queue:
-            nextqueue = list()
-            layer = list()
+            next_queue = []
+            layer = []
             for node in queue:
-                if node.left:
-                    nextqueue.append(node.left)
-                if node.right:
-                    nextqueue.append(node.right)
-                layer.append(node.val)
-                
-            queue = nextqueue[:]
-            res.append(layer)
+                if node:
+                    layer.append(node.val)
+                    next_queue += [node.left, node.right]
+            queue = next_queue[:]
+            if layer:
+                res.append(layer[:])
         return res
+                              
         
-        
-        
-        
-    

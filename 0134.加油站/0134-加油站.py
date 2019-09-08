@@ -5,17 +5,23 @@ class Solution(object):
         :type cost: List[int]
         :rtype: int
         """
-        if sum(gas) < sum(cost) or not len(gas):
-            return -1
-        l = len(gas)
-        sub = [gas[i] - cost[i] for i in range(l)]
-        
-        g = 0
-        index = 0
-        for i in range(l): #i是出发加油站的编号
-            g = g + sub[i]
-            if g < 0:
-                g = 0
-                index = i + 1
+        idx = 0
+        for i in range(len(gas)):
+            if i < idx:
+                continue
+            j = i
+            left_gas = gas[i]
+            while left_gas > 0:
+                # print j
+                if left_gas < cost[j]: #去不了下一站
+                    idx = max(idx, j)
+                    break
+                left_gas -= cost[j]
+                if (j + 1) % len(gas) == i:
+                    return i
                 
-        return index
+                j = (j + 1) % len(gas)
+                left_gas += gas[j]
+        return -1
+                
+            

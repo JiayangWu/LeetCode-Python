@@ -19,18 +19,14 @@ class Solution(object):
         :type n: Number of characters to read (int)
         :rtype: The number of actual characters read (int)
         """
-        tmp = ["","","",""]
-        cnt = 0
-        read4(tmp)
-        while tmp != ["","","",""]:            
-            for i in range(4):
-                if tmp[i]:                    
-                    buf[cnt] = tmp[i]
-                    cnt += 1
-                    if cnt == n + 1:
-                        return n
-            tmp = ["","","",""]
-            read4(tmp)
-        return cnt
-            
-        
+        res = 0
+        tmp = read4(buf)
+        s = ""
+        while tmp:
+            res += tmp
+            # print buf
+            s += "".join(buf[:tmp])
+            tmp = read4(buf)
+        for i in range(len(s)):
+            buf[i] = s[i]
+        return len(s) if len(s) < n else n

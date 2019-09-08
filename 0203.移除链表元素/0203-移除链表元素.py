@@ -11,17 +11,18 @@ class Solution(object):
         :type val: int
         :rtype: ListNode
         """
-        dummy = ListNode(0)
+        if not head:
+            return head
+        dummy = ListNode(-1)
         dummy.next = head
-        pre = dummy
-        ptr = head
-        while(ptr != None):
-            if ptr.val != val:
-                pre = pre.next
-                ptr = ptr.next
-            else:
-                # print pre.val, ptr.val
-                pre.next = ptr.next
-                ptr = pre.next
-        return dummy.next
         
+        pre, cur = dummy, head
+        while cur:
+            if cur.val == val: #ÐèÒª±»É¾³ý
+                pre.next = cur.next
+                cur.next = None
+                cur = pre.next
+            else:
+                pre = pre.next
+                cur = cur.next
+        return dummy.next

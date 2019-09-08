@@ -59,10 +59,10 @@ class Solution(object):
         for word in words:
             tree.insert(word)
         words = set(words)
-        
         res = set()
         def dfs(x0, y0, node, tmpword):
             visited.add((x0, y0))
+            # print tmpword, x0, y0
             for k in range(4):
                 x = x0 + dx[k]
                 y = y0 + dy[k]
@@ -72,8 +72,8 @@ class Solution(object):
                     dfs(x, y, node[board[x][y]], tmpword + board[x][y])
                     visited.remove((x,y))
                     
-            if tmpword in words: #找到一个单词了
-                res.add(tmpword) #用集合避免重复
+            if tmpword in words:
+                res.add(tmpword)
                     
         for i in range(m):
             for j in range(n):

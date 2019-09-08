@@ -15,15 +15,16 @@ class Solution(object):
         
         def dfs(node, tmp):
             if not node:
-                return 
+                return
             
             tmp = tmp * 10 + node.val
             if not node.left and not node.right:
                 self.res += tmp
+                return
             
             dfs(node.left, tmp)
             dfs(node.right, tmp)
-            # tmp /= 10
-                        
-        dfs(root, 0)
+            # tmp -= node.val
+            
+        dfs(root, 0)   
         return self.res

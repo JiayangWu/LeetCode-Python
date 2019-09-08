@@ -4,13 +4,15 @@ class Solution(object):
         :type strs: List[str]
         :rtype: List[List[str]]
         """
-        hashmap = dict()
-        for s in strs:
-            t = "".join(sorted(s))
-
-            if t in hashmap:
-                hashmap[t].append(s)
+        record = dict()
+        
+        for word in strs:
+            tmp = tuple(sorted(word))
+            # print tmp
+            if tmp in record:
+                record[tmp].append(word)
             else:
-                hashmap[t] = [s]
+                record[tmp] = [word]
+        return [val for key, val in record.items()]
             
-        return hashmap.values()
+                

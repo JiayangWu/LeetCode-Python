@@ -11,30 +11,16 @@ class Solution(object):
         :type root: TreeNode
         :rtype: List[List[int]]
         """
-        # Definition for a binary tree node.
-
-        if not root:
-            return []
-        node = [root]
-        node_val = list(list())
-        self.generate(node, node_val)
-        return node_val[::-1]
-    
-    def generate(self, node, node_val):
-        new_node = []
-        new_node_val = []
-        for node in node:
-            if node.left:
-                new_node.append(node.left)
-            if node.right:
-                new_node.append(node.right)
-            new_node_val.append(node.val)
-        node_val.append(new_node_val)
-        if len(new_node) == 0:
-            return
-        self.generate(new_node, node_val)
-        
-        
-        
-        
-    
+        queue = [root]
+        res = []
+        while queue:
+            next_queue = []
+            layer = []
+            for node in queue:
+                if node:
+                    layer.append(node.val)
+                    next_queue += [node.left, node.right]
+            queue = next_queue[:]
+            if layer:
+                res.append(layer[:])
+        return res[::-1]

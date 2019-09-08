@@ -12,22 +12,8 @@ class Solution(object):
         :type q: TreeNode
         :rtype: bool
         """
-        if not p and not q:
-            return True
-        
-        self.result = True
-        self.check(p,q)
-        return self.result
-    
-    def check(self, p, q):
-        # if :
-        if (not p or not q)  or (p.val != q.val)  :
-            self.result = False
-            return 
-
-        if p.left or q.left:
-            self.check(p.left, q.left)
-        if p.right or q.right:
-            self.check(p.right, q.right)
-        
-        return
+        if not p:
+            return not q
+        if not q:
+            return not p
+        return p.val == q.val and self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)

@@ -4,20 +4,19 @@ class Solution(object):
         :type digits: str
         :rtype: List[str]
         """
+        if not digits:
+            return []
         mapping = {2:"abc", 3:"def", 4:"ghi", 5:"jkl", 6:"mno", 7:"pqrs", 8:"tuv", 9:"wxyz"}
-        
+               
         res = []
-        for digit in digits:
-            temp = []
-            n = int(digit)
-            for char in mapping[n]:
-                # print char
-                if not res:
-                    temp.append(char)
-                else:
-                    for item in res:
-                        temp.append(item + char)
-            res = temp
-            # print res
-        
+        # for i, digit in enumerate(digits)
+        def dfs(nums, tmp):
+            if not nums:
+                res.append(tmp)
+                return
+                   
+            for char in mapping[int(nums[0])]:
+                dfs(nums[1:], tmp + char)
+                          
+        dfs(digits, "")
         return res

@@ -5,15 +5,17 @@ class Solution(object):
         :type val: int
         :rtype: int
         """
-        i = 0
-        while( i <len(nums)):
-            print i
-            if nums[i] == val:
-                nums.pop(i)
-            else:
-                i += 1
-
-              
-        return len(nums)
+        nums.sort()
+        for i, num in enumerate(nums):
+            if num == val:
+                j = i + 1
+                while(j < len(nums) and nums[j] == num):
+                    j += 1
+                t = j
+                while(j < len(nums)):
+                    nums[i] = nums[j]
+                    i += 1
+                    j += 1
+                return i
+                
                     
-        

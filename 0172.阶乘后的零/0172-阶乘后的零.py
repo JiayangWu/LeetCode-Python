@@ -6,7 +6,6 @@ class Solution(object):
         """
         res = 0
         while n > 4:
+            res += n //5
             n //= 5
-            res += n
         return res
-        

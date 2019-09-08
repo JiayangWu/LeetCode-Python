@@ -1,11 +1,11 @@
 class WordDictionary(object):
- 
+
     def __init__(self):
         """
         Initialize your data structure here.
         """
         self.roots = {}
- 
+
     def addWord(self, word):
         """
         Adds a word into the data structure.
@@ -17,7 +17,7 @@ class WordDictionary(object):
         for char in word:
             node = node.setdefault(char, {})
         node["end"] = True
- 
+
     def search(self, word):
         """
         Returns if the word is in the data structure. A word could contain the dot character '.' to represent any one letter.
@@ -27,7 +27,7 @@ class WordDictionary(object):
         self.res = False
         self.searchHelper(self.roots, word)
         return self.res
- 
+
     def searchHelper(self, dic, word):
         if not word:
             self.res |= "end" in dic

@@ -4,19 +4,16 @@ class Solution(object):
         :type nums: List[int]
         :rtype: List[List[int]]
         """
-        res, l = list(), len(nums)
-        def dfs(n, tmp):
-            if len(tmp) == l:
-                if tmp not in res:
-                    res.append(tmp[:])
-                return
-            for i, x in enumerate(n):
-                tmp.append(x)
-                dfs(n[:i] + n[i + 1:], tmp)
-                tmp.pop()
-            
-            
-        for i, x in enumerate(nums):
-            dfs(nums[:i] + nums[i + 1:], [x])
-            
+        nums.sort()
+        res = []
+        record = dict()
+        def dfs(tmp, nums):
+            if not nums:
+                res.append(tmp)
+                    
+            for i, x in enumerate(nums):
+                if i == 0 or nums[i] != nums[i - 1]:
+                    dfs(tmp + [x], nums[:i] + nums[i + 1:])
+                
+        dfs([], nums)
         return res

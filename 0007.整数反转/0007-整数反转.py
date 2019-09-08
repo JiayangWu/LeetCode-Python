@@ -4,19 +4,16 @@ class Solution(object):
         :type x: int
         :rtype: int
         """
-
-        flag = 0
+        INT_MIN = -2 **31
+        INT_MAX = 2 ** 31 - 1
+        op = 1
         if x < 0:
-            flag = 1
-        if flag:
+            op = -1
             s = str(x)[1:]
-            s = s[::-1]
-            x = -1 *int(s)            
         else:
             s = str(x)
-            s = s[::-1]
-            x = int(s)
             
-        if x < -1 * 2 **31 or x > 2** 31 -1:
-            return 0    
-        return x
+        res = op * int(s[::-1])
+        return res if INT_MIN <= res <= INT_MAX else 0
+            
+        

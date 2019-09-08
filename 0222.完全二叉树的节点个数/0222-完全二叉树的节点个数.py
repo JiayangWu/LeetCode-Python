@@ -11,6 +11,9 @@ class Solution(object):
         :type root: TreeNode
         :rtype: int
         """
-        if not root:
-            return 0
-        return 1 + self.countNodes(root.left) + self.countNodes(root.right)
+        def inorder(node):
+            if not node:
+                return []
+            return inorder(node.left) + [node.val] + inorder(node.right)
+        return len(inorder(root))
+        

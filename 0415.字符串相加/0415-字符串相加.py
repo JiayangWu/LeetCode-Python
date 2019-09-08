@@ -1,41 +1,36 @@
 class Solution(object):
-    def addStrings(self, nums1, nums2):
+    def addStrings(self, s1, s2):
         """
         :type num1: str
         :type num2: str
         :rtype: str
         """
-        if not nums1:
-            return nums2
-        elif not nums2:
-            return nums1
-        elif not nums1 and not nums2:
-            return ""
-        
-        l1, l2 = len(nums1), len(nums2)
-        if l1 > l2: #保证 l1 较短
+        l1, l2 = len(s1), len(s2)
+        if l1 < l2:
+            s1, s2 = s2, s1
             l1, l2 = l2, l1
-            nums1, nums2 = nums2, nums1
-        n1 = list(nums1)[::-1]
-        n2 = list(nums2)[::-1]
-        
-        res = list()
-        for i in range(0, l2):
-            if i < l1:
-                res.append(int(n1[i]) + int(n2[i]))
-            else:
-                res.append(int(n2[i]))
-        
-        # print res
-        for i in range(0, l2):
-            while(res[i] > 9):
-                res[i] -= 10
-                if i != l2 - 1:
-                    res[i + 1] += 1
+        s1 = [int(x) for x in s1]
+        s2 = [int(x) for x in s2]
+        s1, s2 = s1[::-1], s2[::-1]
+        for i, digit in enumerate(s2):
+            s1[i] += s2[i]
+            
+        s1 = self.CarrySolver(s1)
+        s1 = s1[::-1]
+        return "".join(str(x) for x in s1)
+    
+    def CarrySolver(self, nums):  
+        #这个函数的功能是：将输入的数组中的每一位处理好进位
+        #举例：输入[15, 27, 12], 返回[5, 8, 4, 1]
+        i = 0
+        while i < len(nums):
+            if nums[i] >= 10:
+                carrier = nums[i] // 10
+                if i == len(nums) - 1:
+                    nums.append(carrier)
                 else:
-                    res.append(1)
-                    l2 += 1
+                    nums[i + 1] += carrier
+                nums[i] %= 10
+            i += 1
                     
-        return "".join(str(res[i]) for i in range(l2 - 1, -1, -1))
-        
-        
+        return nums

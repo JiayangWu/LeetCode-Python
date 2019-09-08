@@ -4,27 +4,39 @@ class Solution(object):
         :type matrix: List[List[int]]
         :rtype: List[int]
         """
-        m = len(matrix)
-        if m == 0:
+        if not matrix or not matrix[0]:
             return []
-        n = len(matrix[0])
-        if n == 0:
-            return []
-        r, i, j, di, dj = list(), 0, 0, 0, 1
-        
-        for _ in range(m * n):
-            r.append(matrix[i][j])
-            matrix[i][j] = None
-            if matrix[(i + di) % m][(j + dj) % n] == None: #来过了改转向了
-                di, dj = dj, -di #0 1 变 1 0, 1 0 变 0 -1, 0 -1 变 -1, 0, -1 0 变 0 1                
-            i += di
-            j += dj
-
-        return r
-                    
-                    
-                
-                        
-                
-                    
-        
+        m, n = len(matrix), len(matrix[0])
+        i, j = 0, 0
+        state = "right"
+        cnt = 0
+        res = []
+        while(cnt < m * n):
+            cnt += 1
+            res.append(matrix[i][j])
+            matrix[i][j] = "X"
+            if state == "right":
+                j += 1
+                if j == n or matrix[i][j] == "X":
+                    i += 1
+                    j -= 1
+                    state = "down"
+            elif state == "down":
+                i += 1
+                if i == m or matrix[i][j] == "X":
+                    i -= 1
+                    j -= 1
+                    state = "left"
+            elif state == "left":
+                j -= 1
+                if j == -1 or matrix[i][j] == "X":
+                    j += 1
+                    i -= 1
+                    state = "up"
+            elif state == "up":
+                i -= 1
+                if i == -1 or matrix[i][j] == "X":
+                    i += 1
+                    j += 1
+                    state = "right"
+        return res

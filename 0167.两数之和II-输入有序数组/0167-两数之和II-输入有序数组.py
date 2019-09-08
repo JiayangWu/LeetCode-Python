@@ -6,10 +6,11 @@ class Solution(object):
         :rtype: List[int]
         """
         left, right = 0, len(numbers) - 1
-        while(left < right):
-            if numbers[left] + numbers[right] == target:
+        while 1:
+            tmp = numbers[left] + numbers[right]
+            if tmp == target:
                 return [left + 1, right + 1]
-            if numbers[left] + numbers[right] < target:
+            elif tmp < target:
                 left += 1
-            elif numbers[left] + numbers[right] > target:
+            elif tmp > target:
                 right -= 1

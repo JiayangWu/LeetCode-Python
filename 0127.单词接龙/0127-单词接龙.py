@@ -1,4 +1,3 @@
-from collections import deque
 class Solution(object):
     def ladderLength(self, beginWord, endWord, wordList):
         """
@@ -7,27 +6,29 @@ class Solution(object):
         :type wordList: List[str]
         :rtype: int
         """
-        if endWord not in wordList or beginWord == endWord:
+        from collections import deque
+        if endWord not in wordList:
             return 0
-        visited = set()
-        wordList = set(wordList)
+        wordList = set(wordList) #必备优化，不然超时
         
-        q = deque()
-        q.append([beginWord, 0])
-        
-        char = "abcdefghijklmnopqrstuvwxyz"
-        while q:
-            cur, cnt = q.popleft() #从队列里取一个出来
-            if cur == endWord: #如果刚好找到了
-                return cnt + 1
-               
-            for i in range(len(cur)):
-                for j in range(26):
-                    word = cur[:i] + char[j] + cur[i + 1:] #把26种变换可能都生成
-                    if word in wordList and word not in visited: #判断变换有没有效
-                        visited.add(word)
-                        q.append([word, cnt + 1])
-                    
+        res, forward, backward = 2, {beginWord}, {endWord}
+        while forward:
+            if len(forward) > len(backward):
+                forward, backward = backward, forward
+                
+            next_level = set()
+            for word in forward:
+                for i in range(len(word)):
+                    for k in range(26):
+                        tmp = word[:i] + chr(ord("a") + k) + word[i + 1:]
+                        
+                        if tmp in backward: #找到了
+                            return res
+                        if tmp in wordList:
+                            next_level.add(tmp)
+                            wordList.remove(tmp)
+            res += 1
+            forward = next_level
+                            
+                        
         return 0
-                    
-            

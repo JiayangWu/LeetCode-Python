@@ -6,31 +6,23 @@ class Solution(object):
         :type upper: int
         :rtype: List[str]
         """
-        # if not nums:
-        #     if lower == upper:
-        #         return [str(lower)]
-        #     else:
-        #         return [str(lower) + "->" + str(upper)]
-        start = lower
-        end = lower
+        start, end = lower, lower #左闭右开
         res = []
-        for i in range(len(nums)):
-            if nums[i] == end:
-                start, end = nums[i] + 1, nums[i] + 1
-                
-            elif nums[i] > end:
-                end = max(end, nums[i] - 1)
-                
-                if end != start:
-                    res.append(str(start) + "->" + str(end))
-                else:
+        for i, num in enumerate(nums):
+            if num == end: #连上了
+                start, end = num + 1, num + 1
+            elif num > end: #没连上
+                end = max(end, num - 1)
+                if end - start == 0: #只有一个数
                     res.append(str(start))
+                else:
+                    res.append(str(start) + "->" + str(end))
+                start, end = num + 1, num + 1
+        end = upper
+        if start < end:
+            res.append(str(start) + "->" + str(end))
+        elif end == start: #只有一个数
+                res.append(str(start))
+        return res
                     
-                start, end = nums[i] + 1, nums[i] + 1
                 
-        if start < upper:       
-            res.append(str(start) + "->" + str(upper))
-        elif start == upper:
-            res.append(str(start))
-            
-        return res         

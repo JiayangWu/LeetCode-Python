@@ -4,15 +4,17 @@ class Solution(object):
         :type n: int
         :rtype: bool
         """
-        l = set()
-        while(n!= 1):
-            l.add(n)
-            temp = 0
-            while(n > 0):
-                temp += (n % 10) ** 2
-                n /= 10
-            n = temp
-            if n in l:
-                return False
-                    
-        return n == 1
+        def happy(num):
+            res = 0
+            while num:
+                num, tmp = divmod(num, 10)
+                res += tmp ** 2
+            return res
+        visited = set()
+        while n and n not in visited:
+            visited.add(n)
+            tmp = happy(n)
+            if tmp == 1:
+                return True
+            n = tmp
+        return False

@@ -12,22 +12,20 @@ class Solution(object):
         :type postorder: List[int]
         :rtype: TreeNode
         """
-        if not postorder:
+        if not inorder:
             return None
+        root_val = postorder[-1]
+        root_idx = inorder.index(root_val)
         
-        root = TreeNode(postorder[-1])
+        postorder_left = postorder[:root_idx]
+        postorder_right = postorder[root_idx:-1]
         
-        root_index = inorder.index(postorder[-1])
+        inorder_left = inorder[:root_idx]
+        inorder_right = inorder[root_idx + 1:]
         
-        left_inorder = inorder[:root_index]
-        right_inorder = inorder[root_index + 1:]
-        
-        l_left = len(left_inorder)
-        
-        left_postorder = postorder[:l_left]
-        right_postorder = postorder[l_left : -1]
-        
-        root.left = self.buildTree(left_inorder, left_postorder)
-        root.right = self.buildTree(right_inorder, right_postorder)
+        # print preorder_left, preorder_right, inorder_left, inorder_right
+        root = TreeNode(root_val)
+        root.left = self.buildTree(inorder_left, postorder_left)
+        root.right = self.buildTree(inorder_right, postorder_right)
         
         return root

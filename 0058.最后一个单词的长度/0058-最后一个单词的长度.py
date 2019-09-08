@@ -4,9 +4,11 @@ class Solution(object):
         :type s: str
         :rtype: int
         """
-        if len(s) <= 0 :
-            return 0
-        s = s.rstrip(" ")
-        print s,s.split(" ")
-        return len(s.split(" ")[-1])
-        
+        cnt = 0
+        for i in range(len(s) - 1, -1, -1):
+            if s[i] != " ":
+                while i >= 0 and s[i] != " ":
+                    cnt += 1
+                    i -= 1
+                break
+        return cnt
