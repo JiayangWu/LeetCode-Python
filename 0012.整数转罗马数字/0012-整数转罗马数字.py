@@ -13,3 +13,4 @@ class Solution(object):
             if num == 0:
                 break
         return res
+
