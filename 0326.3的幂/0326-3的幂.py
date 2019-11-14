@@ -4,9 +4,7 @@ class Solution(object):
         :type n: int
         :rtype: bool
         """
-        i = 1
-        while(i<n):
-            i *= 3
-        return i == n
-            
-        
+        t = 1
+        while t < n:
+            t *= 3
+        return n == t
