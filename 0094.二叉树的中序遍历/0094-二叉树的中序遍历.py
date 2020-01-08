@@ -11,21 +11,16 @@ class Solution(object):
         :type root: TreeNode
         :rtype: List[int]
         """
-        result = list() 
-        self.generate(root, result)
-        return result
+        stack = []
+        cur = root
+        res = []
+        while cur or stack:
+            if cur:
+                stack.append(cur)
+                cur = cur.left 
+            else:
+                cur = stack.pop()
+                res.append(cur.val)
+                cur = cur.right 
+        return res
 
-
-    
-    def generate(self, root, result):
-        
-        if not root:
-            return 
-        
-        if root.left:
-            self.generate(root.left, result)
-            
-        result.append(root.val)
-
-        if root.right:
-            self.generate(root.right, result)

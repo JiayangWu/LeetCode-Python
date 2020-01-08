@@ -1,7 +1,7 @@
 """
 # Definition for a Node.
 class Node(object):
-    def __init__(self, val, children):
+    def __init__(self, val=None, children=None):
         self.val = val
         self.children = children
 """
@@ -12,11 +12,9 @@ class Solution(object):
         :rtype: List[int]
         """
         if not root:
-            return list()
-        result = list()
-        result.append(root.val)
-        
-        for leaf in root.children:
-            result += self.preorder(leaf)
-            
-        return result
+            return []
+
+        res = [root.val]
+        for child in root.children:
+            res += self.preorder(child)
+        return res

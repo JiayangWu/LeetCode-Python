@@ -12,12 +12,9 @@ class Solution(object):
         :rtype: TreeNode
         """
         if not root:
-            return None
-        # print root.val,  self.generate(root.left), self.generate(root.right)
+            return None 
         root.left = self.pruneTree(root.left)
         root.right = self.pruneTree(root.right)
-        if root.left == None and root.right == None and (root.val == 0):
-            return None
+        if not root.left and not root.right and not root.val:
+            root = None 
         return root
-    
-            

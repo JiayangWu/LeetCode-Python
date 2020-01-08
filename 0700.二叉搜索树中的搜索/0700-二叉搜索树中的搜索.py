@@ -12,14 +12,10 @@ class Solution(object):
         :type val: int
         :rtype: TreeNode
         """
-        # print root.val
-        if not root:
-            return None
-        if root.val == val:
+        if not root or root.val == val:
             return root
-        elif root.val > val:
+
+        if root.val > val:
             return self.searchBST(root.left, val)
-        else:
+        elif root.val < val:
             return self.searchBST(root.right, val)
-            
-        
