@@ -1,7 +1,7 @@
 """
 # Definition for a Node.
 class Node(object):
-    def __init__(self, val, children):
+    def __init__(self, val=None, children=None):
         self.val = val
         self.children = children
 """
@@ -11,10 +11,9 @@ class Solution(object):
         :type root: Node
         :rtype: int
         """
-        result = []
         if not root:
             return 0
-        for node in root.children:
-            result.append(self.maxDepth(node))
-        
-        return 1 + max(result) if result else 1
+        res = 0
+        for child in root.children:
+            res = max(res, self.maxDepth(child))
+        return 1 + res

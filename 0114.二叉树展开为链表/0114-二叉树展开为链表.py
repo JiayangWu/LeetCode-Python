@@ -12,16 +12,16 @@ class Solution(object):
         :rtype: None Do not return anything, modify root in-place instead.
         """
         if not root:
-            return None
-        if not root.left and not root.right:
             return root
-        
         self.flatten(root.left)
         self.flatten(root.right)
-        ltree, rtree = root.left, root.right
-        root.right = ltree
+        
+        tmp = root.right
+        root.right = root.left
         root.left = None
-        p = root
-        while p.right:
-            p = p.right
-        p.right = rtree
+        
+        node = root
+        while node.right:
+            node = node.right
+        node.right = tmp
+        

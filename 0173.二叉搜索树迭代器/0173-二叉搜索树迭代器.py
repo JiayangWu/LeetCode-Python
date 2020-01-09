@@ -11,27 +11,32 @@ class BSTIterator(object):
         """
         :type root: TreeNode
         """
+        self.stack = []
+        self.cur = root
         
-        def inorder(node):
-            if not node:
-                return []
-            return inorder(node.left) + [node.val] + inorder(node.right)
-        self.l = inorder(root)
-        self.idx = 0
     def next(self):
         """
         @return the next smallest number
         :rtype: int
         """
-        self.idx += 1
-        return self.l[self.idx - 1]
+        while self.cur or self.stack:
+            if self.cur:
+                self.stack.append(self.cur)
+                self.cur = self.cur.left
+            else:
+                self.cur = self.stack.pop()
+                res = self.cur.val
+                self.cur = self.cur.right
+
+                return res
+            
 
     def hasNext(self):
         """
         @return whether we have a next smallest number
         :rtype: bool
         """
-        return self.idx < len(self.l)
+        return self.cur or self.stack
 
 
 # Your BSTIterator object will be instantiated and called as such:

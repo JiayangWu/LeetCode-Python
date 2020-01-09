@@ -13,8 +13,11 @@ class Solution(object):
         """
         if not nums:
             return None
-        l = len(nums)
-        root = TreeNode(nums[l // 2])
-        root.left = self.sortedArrayToBST(nums[:l//2])
-        root.right = self.sortedArrayToBST(nums[l//2 + 1:])
+        rootIdx = len(nums)//2
+        rootVal = nums[rootIdx]
+        
+        root = TreeNode(rootVal)
+        root.left = self.sortedArrayToBST(nums[:rootIdx])
+        root.right = self.sortedArrayToBST(nums[rootIdx + 1:])
+        
         return root

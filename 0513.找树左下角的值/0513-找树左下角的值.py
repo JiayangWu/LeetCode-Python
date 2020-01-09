@@ -11,18 +11,19 @@ class Solution(object):
         :type root: TreeNode
         :rtype: int
         """
-        next_layer = [root]
-        while(next_layer):
-            temp_next_layer = []
-            layer_value = []
-            for node in next_layer:
-                if node.left:                    
-                    temp_next_layer.append(node.left)
-                if node.right:
-                    temp_next_layer.append(node.right)
-                layer_value.append(node.val)
-                # print layer_value 
-            next_layer = temp_next_layer
-            
-        # print layer_value        
-        return layer_value[0]
+        #层序遍历返回最后一层第一个
+        from collections import deque
+        if not root:
+            return None
+        queue = deque([root])
+        while queue:
+            res = []
+            for _ in range(len(queue)):
+                cur = queue.popleft()
+                res.append(cur.val)
+                if cur.left:
+                    queue.append(cur.left)
+                if cur.right:
+                    queue.append(cur.right)
+        return res[0]
+                    

@@ -11,8 +11,9 @@ class Solution(object):
         :type root: TreeNode
         :rtype: List[int]
         """
-        stack = [root]
-        res = []
+        # left right mid
+        # mid right left [::-1]
+        stack, res = [root], []
         while stack:
             cur = stack.pop()
             if cur:
@@ -20,3 +21,5 @@ class Solution(object):
                 stack.append(cur.left)
                 stack.append(cur.right)
         return res[::-1]
+            
+        

@@ -12,11 +12,15 @@ class Solution(object):
         :type k: int
         :rtype: int
         """
-        
-        def inorderTraversal(node):
-            if not node:
-                return []
-            return inorderTraversal(node.left) + [node.val] + inorderTraversal(node.right)
-        
-        l = inorderTraversal(root)
-        return l[k - 1]
+        cnt = 0
+        cur, stack = root, []
+        while cur or stack:
+            if cur:
+                stack.append(cur)
+                cur = cur.left
+            else:
+                cnt += 1
+                cur = stack.pop()
+                if cnt == k:
+                    return cur.val
+                cur = cur.right
