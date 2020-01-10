@@ -11,22 +11,18 @@ class Solution(object):
         :type root: TreeNode
         :rtype: List[float]
         """
+        from collections import deque 
         if not root:
             return []
-        next_layer = [root.left, root.right]
-        result = [float(root.val)]
-        
-        while(next_layer):
-            temp_next_layer = list()
-            layer_value = list()
-            for node in next_layer:
-                if not node:
-                    continue
-                temp_next_layer.append(node.left)
-                temp_next_layer.append(node.right)
-                layer_value.append(node.val)
-            if layer_value:
-                result.append(sum(layer_value) / float(len(layer_value)))
-            next_layer = temp_next_layer
-        return result
-        
+        queue = deque([root])
+        res = []
+        while queue:
+            layer = []
+            for _ in range(len(queue)):
+                cur = queue.popleft() 
+                if cur:
+                    layer.append(cur.val)
+                    queue += [cur.left, cur.right] 
+            if layer:
+                res.append(sum(layer) * 1.0 / len(layer))
+        return res

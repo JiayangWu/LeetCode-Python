@@ -11,7 +11,7 @@ class Solution(object):
         :type root: TreeNode
         :rtype: bool
         """
-        if not root or (not root.left and not root.right):
+        if not root:
             return True
         left = not root.left or (self.isUnivalTree(root.left) and root.val == root.left.val)
         right = not root.right or (self.isUnivalTree(root.right) and root.val == root.right.val)

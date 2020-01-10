@@ -11,15 +11,18 @@ class Solution(object):
         :type root: TreeNode
         :rtype: List[int]
         """
+        from collections import deque 
+        if not root:
+            return []
+        queue = deque([root])
         res = []
-        def dfs(node, depth):
-            if not node:
-                return
-            if depth > len(res):
-                res.append(node.val)
-            dfs(node.right, depth + 1)
-            dfs(node.left, depth +1)
-            
-            
-        dfs(root, 1)
+        while queue:
+            tmp = None
+            for _ in range(len(queue)):
+                cur = queue.popleft() 
+                if cur:
+                    tmp = cur.val 
+                    queue += [cur.left, cur.right] 
+            if tmp:
+                res.append(tmp)
         return res

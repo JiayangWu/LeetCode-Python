@@ -13,19 +13,11 @@ class Solution(object):
         :rtype: TreeNode
         """
         if not inorder:
-            return None
-        root_val = postorder[-1]
-        root_idx = inorder.index(root_val)
+            return None 
         
-        postorder_left = postorder[:root_idx]
-        postorder_right = postorder[root_idx:-1]
-        
-        inorder_left = inorder[:root_idx]
-        inorder_right = inorder[root_idx + 1:]
-        
-        # print preorder_left, preorder_right, inorder_left, inorder_right
-        root = TreeNode(root_val)
-        root.left = self.buildTree(inorder_left, postorder_left)
-        root.right = self.buildTree(inorder_right, postorder_right)
-        
+        root = TreeNode(postorder[-1])
+        idx = inorder.index(root.val)
+
+        root.left = self.buildTree(inorder[:idx], postorder[:idx])
+        root.right = self.buildTree(inorder[idx + 1:], postorder[idx:-1])
         return root

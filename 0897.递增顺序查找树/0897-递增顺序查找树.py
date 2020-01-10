@@ -11,26 +11,24 @@ class Solution(object):
         :type root: TreeNode
         :rtype: TreeNode
         """
-        preorder = list()
-        
-        def pre_order(root):
-            if not root:
-                return
-            pre_order(root.left)
-            preorder.append(root.val)
-            pre_order(root.right)
-        
-        pre_order(root)
-        dummy = TreeNode(0)
-        for i, node in enumerate(preorder):
+        if not root:
+            return root 
+        new_root = TreeNode(-1)
 
-            temp = TreeNode(node)
-            temp.left = None
-            temp.right = None
-            if i == 0:
-                dummy.right = temp
-                cur = temp
+        cur, stack = root, []
+        parent = None
+        while cur or stack:
+            if cur:
+                stack.append(cur)
+                cur = cur.left 
             else:
-                cur.right = temp
-                cur = temp
-        return dummy.right
+                cur = stack.pop()
+                cur.left = None
+                if not parent:
+                    parent = cur
+                    new_root.right = parent 
+                else:
+                    parent.right = cur 
+                    parent = cur   
+                cur = cur.right 
+        return new_root.right
