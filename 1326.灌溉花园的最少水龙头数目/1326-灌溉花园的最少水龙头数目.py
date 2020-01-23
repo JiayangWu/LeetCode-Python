@@ -8,19 +8,15 @@ class Solution(object):
         ivls = []
         reach = [0 for _ in range(n + 1)]
         for i in range(n + 1):
-            start, end = i - ranges[i], i + ranges[i]
-            end = min(end, n + 1)
-            start = max(start, 0)
-
+            start, end = max(i - ranges[i], 0), min(i + ranges[i], n + 1)
             for j in range(start, end):
                 reach[j] = max(end, reach[j])
 
         res = 0
         pos = 0
         while pos < n:
-            if reach[pos] <= pos:
+            if reach[pos] <= pos: # 无法继续抵达更远的位置
                 return -1
             pos = reach[pos]
             res += 1
         return res
-            
