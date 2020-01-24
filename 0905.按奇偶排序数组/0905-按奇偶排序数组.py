@@ -4,11 +4,4 @@ class Solution(object):
         :type A: List[int]
         :rtype: List[int]
         """
-        odd, even = [], []
-        for i in A:
-            if i % 2:
-                odd.append(i)
-            else:
-                even.append(i)
-                
-        return even + odd
+        return sorted(A, key = lambda x:x % 2)
