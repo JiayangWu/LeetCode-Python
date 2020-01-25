@@ -5,11 +5,8 @@ class Solution(object):
         :type target: int
         :rtype: List[int]
         """
-        hashmap = {}
-        for i, x in enumerate(nums):
-            if hashmap.has_key(target - x):
-                return [hashmap[target - x], i]
-            else:
-                hashmap[x] = i
-                
-        return []
+        dic = {}
+        for i, num in enumerate(nums):
+            if target - num in dic:
+                return [dic[target - num], i]
+            dic[num] = i
