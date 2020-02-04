@@ -1,19 +1,24 @@
 class Solution(object):
-    def nextGreaterElement(self, findNums, nums):
+    def nextGreaterElement(self, nums1, nums2):
         """
-        :type findNums: List[int]
-        :type nums: List[int]
+        :type nums1: List[int]
+        :type nums2: List[int]
         :rtype: List[int]
         """
-        if not findNums or not nums:
-            return []
-        res = list()
-        for item in findNums:
-            index = nums.index(item)
-            for i in range(index, len(nums)):
-                if nums[i] > item:
-                    res.append(nums[i])
-                    break
-            if i + 1 == len(nums) and nums[-1] <= item:
+        mapping = dict()
+        
+        stack = []
+        for num in nums2:
+            while stack and stack[-1] < num:
+                top = stack.pop()
+                mapping[top] = num
+            stack.append(num)
+
+        res = []
+        for num in nums1:
+            if num in mapping:
+                res.append(mapping[num])
+            else:
                 res.append(-1)
+                
         return res
