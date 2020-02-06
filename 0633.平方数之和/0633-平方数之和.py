@@ -4,18 +4,9 @@ class Solution(object):
         :type c: int
         :rtype: bool
         """
-
-        if c == (int(c ** 0.5) ** 2):
-            return True
-        
-        lo, hi = 0, int(c ** 0.5)
-        while(lo <= hi):
-            s = lo ** 2 + hi ** 2
-            if s == c:
+        for i in range(int(c ** 0.5) + 1):
+            t = c - i ** 2
+            s = int (t ** 0.5)
+            if t == s ** 2:
                 return True
-            elif s > c:
-                hi -= 1
-            else:
-                lo += 1
-        return False
-        
+        return False if c else True
