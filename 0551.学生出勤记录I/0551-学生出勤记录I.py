@@ -4,8 +4,4 @@ class Solution(object):
         :type s: str
         :rtype: bool
         """
-        if s.count("A") > 1 or "LLL" in s:
-            return False
-                
-        return True
-            
+        return s.count("A") <= 1 and "LLL" not in s

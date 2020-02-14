@@ -5,16 +5,19 @@ class Solution(object):
         :type k: int
         :rtype: int
         """
+        # prefix[i] = sum(nums[:i])
+        # prefix[j] - prefix[i] = sum(nums[i:j])
         from collections import defaultdict
-        pre_sum = 0
-        record = defaultdict(int)
-        record[0] = 1
+        
+        prefix = [0 for _ in range(len(nums) + 1)]
+        
+        for i, x in enumerate(nums):
+            prefix[i + 1] = prefix[i] + x
+        
+        dic = defaultdict(int)
         res = 0
-        for i in range(len(nums)):
-            pre_sum += nums[i]
-           
-            #ур k - pre_sum
-            res += record[pre_sum - k]
-            record[pre_sum] += 1
-         
+        for i, x in enumerate(prefix):
+            res += dic[x - k]
+            dic[x] += 1
+            
         return res
