@@ -4,23 +4,36 @@ class Solution(object):
         :type S: str
         :rtype: List[int]
         """
-        dic = {}
+        from collections import defaultdict
+        dic = defaultdict(list)
+
+        for ch in "abcdefghijklmnopqrstuvwxyz":
+            for i, char in enumerate(S):
+                if char == ch:
+                    dic[ch].append(i)
+                    break
+
+            for i in range(len(S) - 1, -1, -1):
+                if S[i] == ch:
+                    dic[ch].append(i)
+                    break
+
+
+        intervals = []
+        for val in dic.values():
+            intervals.append(val)
         
-        for index, char in enumerate(S):
-            dic[char] = index
-        
-        right = dic[S[0]]
-        left = 0
+        intervals.sort()
+        #print intervals
+
         res = []
-        for index, char in enumerate(S):
-            right = max(right, dic[char])
-            if index >= right:
-                res.append(right - left + 1)
-                left = right + 1
-        
+        start, end = 0, 0
+        for s, e in intervals:
+            if s > end:
+                res.append(end - start + 1)
+                start, end = s, e
+            else:
+                end = max(e, end)
+        res.append(end - start + 1)
+
         return res
-                
-        
-        
-            
-        

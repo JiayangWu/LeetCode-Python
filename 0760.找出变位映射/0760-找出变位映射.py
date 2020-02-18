@@ -5,12 +5,9 @@ class Solution(object):
         :type B: List[int]
         :rtype: List[int]
         """
-        record = dict()
-        for i, b in enumerate(B):
-            record[b] = i
-            
-        res = [-1 for _ in range(len(A))]
-        for i, a in enumerate(A):
-            res[i] = record[a]
-            
-        return res
+
+        dic = dict()
+        for i, x in enumerate(B):
+            dic[x] = i
+        
+        return [dic[x] for x in A]
