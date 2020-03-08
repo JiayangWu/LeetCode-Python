@@ -5,22 +5,21 @@ class Solution(object):
         :type amount: int
         :rtype: int
         """
-        if amount == 0:
-            return 0
-        dp = list()
-        max_int = 2 << 31
+        from collections import deque 
         
-        for i in range(amount + 1):
-            if i not in coins:
-                dp.append(max_int)
-            else:
-                dp.append(1)
-        
-        for i in range(amount + 1):
-            if i not in coins:
-                for j in coins:
-                    if i - j > 0:
-                        dp[i] = min(dp[i - j] + 1, dp[i])
+        queue = deque([(0, 0)])
+        visited = set([0])
+        while queue:
+            cur, step = queue.popleft()
+            if cur == amount:
+                return step
+            if cur > amount:
+                continue
             
-        return dp[amount] if dp[amount] != max_int else -1
-        
+            for coin in coins:
+                value = cur + coin
+                if value not in visited:
+                    visited.add((value))
+                    queue.append((value, step + 1))
+            
+        return -1
