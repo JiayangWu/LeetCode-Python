@@ -13,14 +13,8 @@ class Solution(object):
         """
         if not root:
             return 0
-        self.res = 0
-        def height(node):
+        def Height(node):
             if not node:
                 return 0
-            left_h = height(node.left)
-            right_h = height(node.right)
-            
-            self.res = max(self.res, left_h + right_h) 
-            return 1 + max(left_h, right_h)
-        height(root)
-        return self.res
+            return 1 + max(Height(node.left), Height(node.right))
+        return max(self.diameterOfBinaryTree(root.left), Height(root.left) + Height(root.right), self.diameterOfBinaryTree(root.right))
