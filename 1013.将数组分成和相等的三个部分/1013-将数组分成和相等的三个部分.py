@@ -4,7 +4,6 @@ class Solution(object):
         :type A: List[int]
         :rtype: bool
         """
-        # from collections import defaultdict
         target = sum(A) // 3
         snow = 0
         cnt = 0
@@ -13,4 +12,4 @@ class Solution(object):
             if target == snow:
                 snow = 0
                 cnt += 1
-        return cnt == 3
+        return cnt >= 3
