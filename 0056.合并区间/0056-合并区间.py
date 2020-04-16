@@ -4,18 +4,21 @@ class Solution(object):
         :type intervals: List[List[int]]
         :rtype: List[List[int]]
         """
-        if not intervals:
+        if not intervals or not intervals[0]:
             return intervals
-        intervals = sorted(intervals, key = lambda x: x[0])
-        start, end = intervals[0][0], intervals[0][1]
         
+        intervals = sorted(intervals, key = lambda x:x[0])
+
         res = []
-        for i, interval in enumerate(intervals):
-            if interval[0] > end:
-                res.append([start, end])
-                start, end = interval[0], interval[1]
+        start, end = intervals[0][0], intervals[0][1]
+        for interval in intervals:
+            s, e = interval[0], interval[1]
+            
+            if s <= end: # overlap
+                end = max(end, e)
             else:
-                end = max(end, interval[1])
+                res.append([start, end])
+                start, end = s, e 
+
         res.append([start, end])
         return res
-        
