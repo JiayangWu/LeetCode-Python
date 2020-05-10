@@ -13,4 +13,3 @@ class Solution(object):
             right[i] = right[i + 1] * a[i + 1]
         
         return [left[i] * right[i] for i in range(len(a))]
-            
