@@ -6,14 +6,14 @@ class Solution(object):
         """
         if not nums:
             return 0
-        dp = [] # dp[i]表示以i结尾的连续子数组的最大和
+        dp = [0 for _ in nums]
+        dp[0] = nums[0]
+        
         for i, x in enumerate(nums):
-            if i == 0:
-                dp.append(x)
-            else:
-                if dp[-1] < 0:
-                    dp.append(x)
+            if i:
+                if dp[i - 1] > 0:
+                    dp[i] = max(dp[i - 1] + x, dp[i])
                 else:
-                    dp.append(dp[-1] + x)
+                    dp[i] = x
                     
         return max(dp)

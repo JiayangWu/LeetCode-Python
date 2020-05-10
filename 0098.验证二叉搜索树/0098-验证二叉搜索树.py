@@ -11,10 +11,10 @@ class Solution(object):
         :type root: TreeNode
         :rtype: bool
         """
-        def inOrder(node):
+        def inorder(node):
             if not node:
                 return []
-            return inOrder(node.left) + [node.val] + inOrder(node.right)
+            return inorder(node.left) + [node.val] + inorder(node.right)
         
-        inorder = inOrder(root)
-        return len(inorder) == len(set(inorder)) and inorder == sorted(inorder)
+        l = inorder(root)
+        return l == sorted(l) and len(l) == len(set(l))

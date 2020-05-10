@@ -11,21 +11,23 @@ class Solution(object):
         :type l2: ListNode
         :rtype: ListNode
         """
-        newhead = ListNode(0)
-        p = newhead
-        while(l1 and l2):
-            if l1.val < l2.val:
+        dummy = ListNode(-1)
+        
+        p = dummy
+        
+        while l1 and l2:
+            if l1.val <= l2.val:
                 p.next = ListNode(l1.val)
                 l1 = l1.next
             else:
                 p.next = ListNode(l2.val)
                 l2 = l2.next
             p = p.next
-        
+            
         if l1:
             p.next = l1
-        else:
+            
+        if l2:
             p.next = l2
-        return newhead.next
             
-            
+        return dummy.next

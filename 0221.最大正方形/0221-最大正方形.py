@@ -4,37 +4,26 @@ class Solution(object):
         :type matrix: List[List[str]]
         :rtype: int
         """
-        m = len(matrix)
-        if m == 0:
+        if not matrix or not matrix[0]:
             return 0
-        n = len(matrix[0])
-        if n == 0:
-            return 0
-        self.res = 0
+        m, n = len(matrix), len(matrix[0])
         
-        def find(x, y):
-            for length in range(1, min(m - i, n - j) + 1):#length «±ﬂ≥§
-                cnt = 0
-                
-                for k in range(length):
-                    for t in range(length):
-                        xx = x + k
-                        yy = y + t
-                        
-                        if 0 <= xx <m and 0 <= yy < n:
-                            if matrix[xx][yy] == "0":
-                                return 
-                            else:
-                                cnt += 1
-                if cnt == length ** 2:
-                    self.res = max(self.res, cnt)
-                                 
-                
+        dp = [[0 for _ in range(n)] for _ in range(m)]
+        res = 0
+        for j in range(n):
+            if matrix[0][j] == "1":
+                dp[0][j] = 1
+                res = 1
         
         for i in range(m):
-            for j in range(n):
+            if matrix[i][0] == "1":
+                dp[i][0] = 1
+                res = 1
+                
+        for i in range(1, m):
+            for j in range(1, n):
                 if matrix[i][j] == "1":
-                    find(i, j)
-                    
-        return self.res
-                           
+                    dp[i][j] = min(dp[i - 1][j - 1], dp[i][j - 1], dp[i - 1][j]) + 1
+                    res = max(res, dp[i][j] ** 2)
+        # print dp
+        return res
