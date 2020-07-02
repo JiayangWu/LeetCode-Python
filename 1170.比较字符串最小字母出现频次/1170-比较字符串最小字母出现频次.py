@@ -5,24 +5,18 @@ class Solution(object):
         :type words: List[str]
         :rtype: List[int]
         """
+        def f(word):
+            return word.count(min(word))
         
-        def func(word):
-            for char in "abcdefghijklmnopqrstuvwxyz":
-                if char in word:
-                    return word.count(char)
-            return 0
+        f_words = sorted([f(word) for word in words])
         
-        def func2(word):
-            record = collections.Counter(word)
-            return record[min(record.keys())]
-        
-        
-        words_count = sorted(map(func2, words))
-        queries_count = map(func2, queries)
-        # print words_count, queries_count
-        ans = []
-        for query in queries_count:
-            index = bisect.bisect(words_count, query) #bisect可以迅速找出有index个数 <= query
-            ans.append(len(words_count) - index)# 减法找有多少个数比query大
-        return ans
+        res = []
+        # print f_words
+        for q in queries:
+            cnt = f(q)
+            # print(bisect.bisect(f_words, cnt))
+            res.append(len(f_words) - bisect.bisect(f_words, cnt))
+            
+        return res
+            
             

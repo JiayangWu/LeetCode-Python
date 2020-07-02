@@ -16,7 +16,7 @@ class Solution(object):
         return dp[target]
     
         # dp = [[0 for _ in range(len(prob) + 1)] for _ in range(len(prob))]
-        # # dp[i][j] 表示前i个硬币里，有j个硬币正面朝上的概率
+        # # dp[i][j] 琛ㄧず鍓峣涓‖甯侀噷锛屾湁j涓‖甯佹闈㈡湞涓婄殑姒傜巼
         # dp[0][1] = prob[0]
         # dp[0][0] = 1 - prob[0]
         # for i, p in enumerate(prob):

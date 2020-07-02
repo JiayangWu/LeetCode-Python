@@ -5,4 +5,4 @@ class Solution(object):
         :type target: int
         :rtype: bool
         """
-        return nums.count(target) > len(nums) // 2
+        return nums.count(target) > (len(nums) // 2)
