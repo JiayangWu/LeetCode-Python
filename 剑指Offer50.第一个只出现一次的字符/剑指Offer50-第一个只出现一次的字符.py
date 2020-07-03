@@ -5,7 +5,6 @@ class Solution(object):
         :rtype: str
         """
         from collections import Counter
-        
         dic = Counter(s)
         
         for ch in s:

@@ -5,4 +5,4 @@ class Solution(object):
         :type b: int
         :rtype: int
         """
-        return max(a, b)
+        return max(a, b) 
