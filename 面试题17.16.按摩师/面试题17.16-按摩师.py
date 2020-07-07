@@ -4,10 +4,11 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
+        if not nums:
+            return 0
+        if len(nums) == 1:
+            return nums[0]
         dp = [0 for _ in nums]
-
         for i in range(len(nums)):
-            dp[i] = nums[i]
-            for j in range(i - 1):
-                dp[i] = max(dp[i], dp[j] + nums[i])
-        return max(dp) if nums else 0
+            dp[i] = max(dp[i - 1], dp[i - 2] + nums[i])
+        return dp[-1]
