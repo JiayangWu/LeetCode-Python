@@ -6,7 +6,9 @@ class Solution(object):
         :type k: int
         :rtype: List[int]
         """
-        res = set()
+        res = []
         for i in range(k + 1):
-            res.add(shorter * i + longer * (k - i))
-        return sorted(list(res)) if k else []
+            s = shorter * (k - i) + longer * i
+            if not res or res[-1] != s:
+                res.append(s)
+        return res if k else []
