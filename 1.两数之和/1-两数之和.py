@@ -1,12 +1,7 @@
-class Solution(object):
-    def twoSum(self, nums, target):
-        """
-        :type nums: List[int]
-        :type target: int
-        :rtype: List[int]
-        """
-        dic = {}
-        for i, num in enumerate(nums):
-            if target - num in dic:
-                return [dic[target - num], i]
-            dic[num] = i
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        hashmap = {}
+        for index, item in enumerate(nums):
+            if target - item in hashmap:
+                return hashmap[target-item],index
+            hashmap[item] = index
