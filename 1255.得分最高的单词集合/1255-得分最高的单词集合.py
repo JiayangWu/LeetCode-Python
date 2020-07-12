@@ -9,25 +9,25 @@ class Solution(object):
         from collections import defaultdict, Counter
         dic = dict()
         letter_dic = defaultdict(int)
-        for i, val in enumerate(score):#æ„å»ºä¸€ä¸ªå­—å…¸
-            dic[chr(ord("a") + i)] = val #keyæ˜¯ å­—æ¯ï¼Œvalæ˜¯å­—æ¯å¯¹åº”çš„åˆ†æ•°
+        for i, val in enumerate(score):#¹¹½¨Ò»¸ö×Öµä
+            dic[chr(ord("a") + i)] = val #keyÊÇ ×ÖÄ¸£¬valÊÇ×ÖÄ¸¶ÔÓ¦µÄ·ÖÊı
             
-        letter_dic = Counter(letters)#æ„å»ºå¦ä¸€ä¸ªå­—å…¸ï¼Œ keyæ˜¯å­—æ¯ï¼Œ valæ˜¯æ¯æ¬¡å­—æ¯å‰©ä½™çš„ä¸ªæ•°
+        letter_dic = Counter(letters)#¹¹½¨ÁíÒ»¸ö×Öµä£¬ keyÊÇ×ÖÄ¸£¬ valÊÇÃ¿´Î×ÖÄ¸Ê£ÓàµÄ¸öÊı
  
         s = set(letters)
         v_words = []
-        for word in words:#åˆ æ‰æ‰€æœ‰æ ¹æœ¬ä¸å¯èƒ½è¢«æ„æˆçš„å•è¯
+        for word in words:#É¾µôËùÓĞ¸ù±¾²»¿ÉÄÜ±»¹¹³ÉµÄµ¥´Ê
             flag = 0
             for char in word:
                 if char not in s:
                     flag = 1
-            if flag: # å¦‚æœä¸€ä¸ªå•è¯é‡Œå­˜åœ¨æŸä¸ªåœ¨lettersé‡Œæ‰¾ä¸åˆ°çš„å­—æ¯ï¼Œåˆ™æ— éœ€è€ƒè™‘è¿™ä¸ªå•è¯
+            if flag: # Èç¹ûÒ»¸öµ¥´ÊÀï´æÔÚÄ³¸öÔÚlettersÀïÕÒ²»µ½µÄ×ÖÄ¸£¬ÔòÎŞĞè¿¼ÂÇÕâ¸öµ¥´Ê
                 continue
             v_words.append(word)
         self.res = 0
                 
         def helper(word, letter_dic):
-            # return True å¦‚æœwordèƒ½ç”¨letter_dicé‡Œçš„letteræ„æˆï¼Œå¦åˆ™è¿”å›False
+            # return True Èç¹ûwordÄÜÓÃletter_dicÀïµÄletter¹¹³É£¬·ñÔò·µ»ØFalse
             dicc = collections.Counter(word)
             for key in dicc:
                 if dicc[key] > letter_dic[key]:
@@ -39,12 +39,12 @@ class Solution(object):
             if start >= len(v_words):
                 return
             
-            for i in range(start, len(v_words)):#ä»startå¼€å§‹æ‰¾ï¼Œé¿å…é‡å¤
-                if helper(v_words[i], letter_dic):#å¦‚æœå½“å‰å•è¯å¯ä»¥è¢«æ„æˆ
-                    for char in v_words[i]: #æ„æˆå®ƒï¼Œæ›´æ–°å­—å…¸
+            for i in range(start, len(v_words)):#´Óstart¿ªÊ¼ÕÒ£¬±ÜÃâÖØ¸´
+                if helper(v_words[i], letter_dic):#Èç¹ûµ±Ç°µ¥´Ê¿ÉÒÔ±»¹¹³É
+                    for char in v_words[i]: #¹¹³ÉËü£¬¸üĞÂ×Öµä
                         letter_dic[char] -= 1
-                    dfs(i + 1, tmp + sum([dic[char] for char in v_words[i]])) #dfsä¸‹ä¸€å±‚
-                    for char in v_words[i]: #å›æº¯ï¼Œå¤åŸæ‰€æœ‰çŠ¶æ€
+                    dfs(i + 1, tmp + sum([dic[char] for char in v_words[i]])) #dfsÏÂÒ»²ã
+                    for char in v_words[i]: #»ØËİ£¬¸´Ô­ËùÓĞ×´Ì¬
                         letter_dic[char] += 1                   
         dfs(0, 0)
         return self.res
