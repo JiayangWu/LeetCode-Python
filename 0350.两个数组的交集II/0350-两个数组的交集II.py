@@ -5,12 +5,11 @@ class Solution(object):
         :type nums2: List[int]
         :rtype: List[int]
         """
+        from collections import Counter
+        dic1 = Counter(nums1)
+        dic2 = Counter(nums2)
+        
         res = []
-        for i in range(0,len(nums1)):
-            if nums1[i] in nums2:
-                nums2.remove(nums1[i])
-                # print nums1,nums2
-                res.append(nums1[i])
-                
-            # print nums1,nums2,res
+        for key, val in dic1.items():
+            res += [key] * min(val, dic2[key])
         return res
