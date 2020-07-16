@@ -4,12 +4,11 @@ class Solution(object):
         :type n: int
         :rtype: int
         """
-        dic = {0:1, 1:1}
-
+        res = [0] * (n+1)
+        res[0] = 1
+        res[1] = 1
         for i in range(2, n + 1):
-            cnt = 0
-            for l in range(0, i):
-                cnt += dic[l] * dic[i - 1 - l]
-            dic[i] = cnt 
-
-        return dic[n]
+            for j in range(i):
+                res[i] += res[j] * res[i-j-1]
+            
+        return res[n]
