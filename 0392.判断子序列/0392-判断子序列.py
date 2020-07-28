@@ -10,4 +10,5 @@ class Solution(object):
             if s[i] == t[j]:
                 i += 1
             j += 1
-        return i == len(s)
+        # test
+        return i == len(s) 
