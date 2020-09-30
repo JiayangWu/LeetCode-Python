@@ -11,11 +11,14 @@ class Solution(object):
         :type root: TreeNode
         :rtype: bool
         """
-        def helper(node1, node2):
-            if not node1:
-                return not node2
-            if not node2:
-                return not node1
-            return node1.val == node2.val and helper(node1.left, node2.right) and helper(node1.right, node2.left)
         
-        return helper(root, root)
+        def isSame(node1, node2):
+            if not node1 and not node2:
+                return True
+            if not node1 and node2:
+                return False
+            if node1 and not node2:
+                return False
+            return node1.val == node2.val and isSame(node1.left, node2.right) and isSame(node1.right, node2.left)
+
+        return isSame(root, root)
