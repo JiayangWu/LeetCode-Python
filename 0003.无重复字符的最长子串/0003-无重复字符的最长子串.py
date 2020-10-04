@@ -4,13 +4,13 @@ class Solution(object):
         :type s: str
         :rtype: int
         """
-        record = {}
-        start, res = 0, 0
-        for end in range(len(s)):
-            if s[end] in record:
-                start = max(start, record[s[end]] + 1)
-                
-            record[s[end]] = end
-            res = max(res, end - start + 1)
-            
+        left, right = 0, 0
+        dic = dict()
+        res = 0
+        while right < len(s):
+            if s[right] in dic:
+                left = max(left, dic[s[right]] + 1)
+            dic[s[right]] = right
+            res = max(res, right - left + 1)
+            right += 1
         return res
