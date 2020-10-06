@@ -4,23 +4,19 @@ class Solution(object):
         :type cpdomains: List[str]
         :rtype: List[str]
         """
-        resList = []
-        resMap = {}
-        for s in cpdomains:
-            count, domains = s.split(' ')
-            n = domains.count('.')
-            tmp = domains
-            for i in range(n+1):
-                if resMap.has_key(tmp):
-                    resMap[tmp] = resMap[tmp] + int(count)
-                else:
-                    resMap[tmp] = int(count)
-                index = tmp.find('.') + 1
-                if index == -1:
-                    break
-                else:
-                    tmp = tmp[index:]
-        # for key, value in resMap.items():
-        #     resList.append(str(value) + ' ' + key);
-        # return resList
-        return [str(resMap[key]) + ' ' + key for key in resMap]
+        from collections import defaultdict
+        dic = defaultdict(int)
+
+        for pair in cpdomains:
+            splitted_pair = pair.split()
+            cnt, domain = splitted_pair[0], splitted_pair[1]
+            cnt = int(cnt)
+
+            for i in range(len(domain)):
+                if not i or domain[i] == ".":
+                    dic[domain[i:].lstrip(".")] += cnt
+
+        res = []
+        for domain, frequency in dic.items():
+            res.append(" ".join([str(frequency), domain]))
+        return res
