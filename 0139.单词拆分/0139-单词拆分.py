@@ -1,17 +1,13 @@
-class Solution(object):
-    def wordBreak(self, s, wordDict):
-        """
-        :type s: str
-        :type wordDict: List[str]
-        :rtype: bool
-        """
-        dp = [0]
-        
-        for j in range(len(s) + 1):
-            for i in dp:
-                if s[i:j] in wordDict:
-                    dp.append(j)
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        from collections import deque
+        wordDict = set(wordDict)
+        record = [0]
+
+        for i in range(len(s) + 1):
+            for j in record:
+                if s[j:i] in wordDict:
+                    record.append(i)
                     break
-        # print dp
-        return dp[-1] == len(s)
-                    
+        # print (record)
+        return record[-1] == len(s)

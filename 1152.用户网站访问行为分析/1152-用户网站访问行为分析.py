@@ -1,36 +1,42 @@
-class Solution(object):
-    def mostVisitedPattern(self, username, timestamp, website):
-        """
-        :type username: List[str]
-        :type timestamp: List[int]
-        :type website: List[str]
-        :rtype: List[str]
-        """
+class Solution:
+    def mostVisitedPattern(self, username: List[str], timestamp: List[int], website: List[str]) -> List[str]:
+        # l = [1,2,3,4,5,6]
+        # for i in range(len(l)):
+        #     for j in range(i + 1, len(l)):
+        #         for k in range(j + 1, len(l)):
+        #             print (l[i], l[j], l[k])
         from collections import defaultdict
-        record = defaultdict(list)
-        for i, un in enumerate(username):
-            record[un].append([timestamp[i], website[i]])
-        # print record
-        row = defaultdict(int)
-        for key in record.keys():
-            record[key].sort()
-            # print record[key]
-            used = set()
-            for i in range(len(record[key])):
-                for j in range(i + 1, len(record[key])):
-                    for k in range(j + 1, len(record[key])):
-                        sequence = record[key][i][1] + "+" + record[key][j][1]+ "+" + record[key][k][1]
-                        if sequence not in used:
-                            row[sequence] += 1
-                            used.add(sequence)
-        # print row
-        possible_sol = []
-        max_freq = max(row.values())
-        for key, val in row.items():
-            if val == max_freq:
-                possible_sol.append(key.split("+"))
-        possible_sol = possible_sol[::-1]
-        # print possible_sol
-        if len(possible_sol) > 1:
-            possible_sol.sort()
-        return possible_sol[0]
+        max_visit_cnt = 0
+        max_visit_websites = []
+        name2web = defaultdict(list)
+        web2freq = defaultdict(int)
+        comb = []
+        for i in range(len(username)):
+            comb.append((username[i], timestamp[i], website[i]))
+        comb.sort(key = lambda x:x[1])
+        for i in range(len(username)):
+            name2web[comb[i][0]].append(comb[i][2])
+        
+        for name, webs in name2web.items():
+            visited = set()
+            for i in range(len(webs)):
+                for j in range(i + 1, len(webs)):
+                    for k in range(j + 1, len(webs)):
+                        tmp = ",".join([webs[i], webs[j], webs[k]])
+                        if tmp in visited:
+                            continue
+                        visited.add(tmp)
+                        web2freq[tmp] += 1
+
+                        if web2freq[tmp] > max_visit_cnt:
+                            max_visit_cnt = web2freq[tmp]
+                            max_visit_websites = [tmp]
+                        elif web2freq[tmp] == max_visit_cnt:
+                            max_visit_websites.append(tmp)
+        # print (max_visit_websites)
+        max_visit_websites.sort()
+        # print (max_visit_websites)
+        s = max_visit_websites[0]
+        l = s.split(",")
+        return l
+
