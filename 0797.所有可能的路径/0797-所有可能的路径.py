@@ -4,19 +4,14 @@ class Solution(object):
         :type graph: List[List[int]]
         :rtype: List[List[int]]
         """
-        res = list()
         n = len(graph)
-        def dfs(start, tmp):
-            if graph[start] == [] and start == n - 1:#没有下一个节点
-                tmp += graph[start]
-                res.append(tmp[:])
+        visited = set()
+        def dfs(cur_node, path):
+            if cur_node == n - 1:
+                res.append(path[:])
                 return
-            
-            l = graph[start]
-            for node in l:
-                tmp.append(node)
-                dfs(node, tmp)
-                tmp.pop()
-
-        dfs(0, [0])        
+            for next_node in graph[cur_node]:
+                dfs(next_node, path + [next_node])
+        res = []
+        dfs(0, [0])
         return res

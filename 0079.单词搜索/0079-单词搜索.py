@@ -7,34 +7,31 @@ class Solution(object):
         """
         if not board or not board[0]:
             return False
-        if not word:
-            return True
-        
-        self.res = False
+
+        m, n = len(board), len(board[0])
         dx = [1, -1, 0, 0]
         dy = [0, 0, 1, -1]
-        def dfs(start, x0, y0):
-            if start == len(word) - 1:
+        self.res = False
+        def dfs(word_idx, x0, y0):
+            # print word_idx
+            if word_idx >= len(word):
                 self.res = True
-                return
-            visited.add((x0, y0))
-            
-            for k in range(4):
-                x = x0 + dx[k]
-                y = y0 + dy[k]
-                # print x, y
-                if 0 <= x < m and 0 <= y < n and (x, y) not in visited and board[x][y] == word[start + 1] and not self.res:
-                    visited.add((x, y))
-                    dfs(start + 1, x, y)
-                    visited.remove((x, y))
-            
-        m, n = len(board), len(board[0])
-        # print m * n, len(word)
+                return 
+            if not self.res:
+                for k in range(len(dx)):
+                    x1 = x0 + dx[k]
+                    y1 = y0 + dy[k]
+
+                    if 0 <= x1 < m and 0 <= y1 < n and board[x1][y1] == word[word_idx]:
+                        temp = board[x1][y1]
+                        board[x1][y1] = -1
+                        dfs(word_idx + 1, x1, y1)
+                        board[x1][y1] = temp
         for i in range(m):
             for j in range(n):
                 if board[i][j] == word[0]:
-                    visited = set()
-                    dfs(0, i, j)
-                    if self.res:
-                        return True
-        return False
+                    temp = board[i][j]
+                    board[i][j] = 0
+                    dfs(1, i, j)
+                    board[i][j] = temp
+        return self.res

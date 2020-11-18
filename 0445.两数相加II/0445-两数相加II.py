@@ -11,39 +11,68 @@ class Solution(object):
         :type l2: ListNode
         :rtype: ListNode
         """
-        s1, s2 = [], []
-        while l1:
-            s1.append(l1.val)
+        def getLinkedListLength(l):
+            length = 0
+            while l:
+                l = l.next
+                length += 1
+            return length
+
+        def printLL(node):
+            l = []
+            while node:
+                l.append(node.val)
+                node = node.next
+            print(l)
+
+        def reverseLL(node):
+            if not node or not node.next:
+                return node
+            p = reverseLL(node.next)
+            node.next.next = node
+            node.next = None
+            return p
+
+        length1 = getLinkedListLength(l1)
+        length2 = getLinkedListLength(l2)
+
+        if length1 < length2:
+            l1, l2 = l2, l1
+            length1, length2 = length2, length1
+
+        dummy = ListNode(-1)
+        p = dummy
+
+        n = length1 - length2
+        while n:
+            p.next = ListNode(l1.val)
             l1 = l1.next
-            
+            p = p.next
+            n -= 1
+
         while l2:
-            s2.append(l2.val)
+            p.next = ListNode(l1.val + l2.val)
+            p = p.next
+            l1 = l1.next
             l2 = l2.next
-        
+
+
+        dummy.next = reverseLL(dummy.next)
+
+        p = dummy.next
         carry = 0
-        cur = ListNode(-1)
-        while s1 or s2:
-            value = carry
-            if s1:
-                value += s1.pop()
-            if s2:
-                value += s2.pop()
+        pre = dummy
+        while p:
+            p.val += carry
+            if p.val > 9:
+                p.val -= 10
+                carry = 1
+            else:
+                carry = 0
+            p = p.next
+            pre = pre.next
 
-            carry = value > 9
-            value %= 10
-            
-            cur.val = value
-            pre = ListNode(-1)
-            pre.next = cur
-            cur = pre
-            
-        if carry: #处理可能的进位
-            pre.val = 1
-            return pre
+        if carry:
+            pre.next = ListNode(1)
         
-        return pre.next
-
-                
-        
-        
-        
+        return reverseLL(dummy.next)
