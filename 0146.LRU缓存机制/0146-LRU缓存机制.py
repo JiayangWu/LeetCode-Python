@@ -15,7 +15,7 @@ class LRUCache(object):
         self.head = DLLNode(-1, -1, None, None)
         self.tail = DLLNode(-1, -1, self.head, None)
         self.head.next = self.tail 
-        self.dic = dict()
+        self.dic = dict() 
 
     def get(self, key):
         """
