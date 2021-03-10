@@ -4,10 +4,13 @@ class Solution(object):
         :type n: int
         :rtype: str
         """
-        s = str(n)[::-1]
         res = ""
-        for i in range(len(s)):
-            res += s[i]
-            if i % 3 == 2 and i != len(s) - 1:
+        cnt = 0
+        for digit in str(n)[::-1]:
+            res += digit
+            cnt += 1
+            if cnt == 3:
+                cnt = 0
                 res += "."
-        return res[::-1] 
+
+        return res[::-1].strip(".")
