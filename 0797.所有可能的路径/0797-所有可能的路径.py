@@ -5,13 +5,15 @@ class Solution(object):
         :rtype: List[List[int]]
         """
         n = len(graph)
-        visited = set()
-        def dfs(cur_node, path):
-            if cur_node == n - 1:
+        res = []
+        def dfs(cur, path):
+            path.append(cur)
+            if cur == n - 1:
                 res.append(path[:])
                 return
-            for next_node in graph[cur_node]:
-                dfs(next_node, path + [next_node])
-        res = []
-        dfs(0, [0])
+
+            for nxt in graph[cur]:
+                dfs(nxt, path[:])
+
+        dfs(0, [])
         return res
