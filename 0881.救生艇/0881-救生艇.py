@@ -7,16 +7,13 @@ class Solution(object):
         """
         people.sort()
         left, right = 0, len(people) - 1
-        res = 0
+        boat_count = 0
         while left <= right:
-            if left == right:
-                res += 1
-                break
+            # print (people[left], people[right], boat_count)
             if people[left] + people[right] <= limit:
                 left += 1
                 right -= 1
-                res += 1
             else:
                 right -= 1
-                res += 1
-        return res 
+            boat_count += 1
+        return boat_count
